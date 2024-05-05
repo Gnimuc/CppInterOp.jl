@@ -6,7 +6,8 @@ using Clang.Clang_jll
 options = load_options(joinpath(@__DIR__, "generator.toml"))
 
 import Pkg
-import BinaryBuilderBase: PkgSpec, Prefix, temp_prefix, setup_dependencies, cleanup_dependencies, destdir
+import BinaryBuilderBase:
+    PkgSpec, Prefix, temp_prefix, setup_dependencies, cleanup_dependencies, destdir
 
 const dependencies = PkgSpec[PkgSpec(; name = "LLVM_full_jll")]
 
@@ -20,10 +21,15 @@ cd(@__DIR__) do
             platform = Pkg.BinaryPlatforms.HostPlatform()
             platform["llvm_version"] = string(llvm_version.major)
             platform["julia_version"] = string(julia_version)
-            artifact_paths = setup_dependencies(prefix, dependencies, platform; verbose=true)
+            artifact_paths =
+                setup_dependencies(prefix, dependencies, platform; verbose = true)
 
             let options = deepcopy(options)
-                output_file_path = joinpath(libdir, string(llvm_version.major), options["general"]["output_file_path"])
+                output_file_path = joinpath(
+                    libdir,
+                    string(llvm_version.major),
+                    options["general"]["output_file_path"],
+                )
                 isdir(dirname(output_file_path)) || mkpath(dirname(output_file_path))
                 options["general"]["output_file_path"] = output_file_path
 

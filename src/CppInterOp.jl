@@ -4,21 +4,27 @@ using Clang_jll
 
 if haskey(ENV, "LIBCPPINTEROP_INSTALL_PREFIX") &&
    !isempty(get(ENV, "LIBCPPINTEROP_INSTALL_PREFIX", ""))
-	# DevMode
-	const __DLEXT = Base.BinaryPlatforms.platform_dlext()
-	const __ARTIFACT_BINDIR = Sys.iswindows() ? "bin" : "lib"
+    # DevMode
+    const __DLEXT = Base.BinaryPlatforms.platform_dlext()
+    const __ARTIFACT_BINDIR = Sys.iswindows() ? "bin" : "lib"
 
-	const libcppinterop = normpath(joinpath(ENV["LIBCPPINTEROP_INSTALL_PREFIX"],
-		__ARTIFACT_BINDIR, "libclangCppInterOp.$__DLEXT"))
-	const libcppinterop_include = normpath(joinpath(ENV["LIBCPPINTEROP_INSTALL_PREFIX"],
-		"include"))
+    const libcppinterop = normpath(
+        joinpath(
+            ENV["LIBCPPINTEROP_INSTALL_PREFIX"],
+            __ARTIFACT_BINDIR,
+            "libclangCppInterOp.$__DLEXT",
+        ),
+    )
+    const libcppinterop_include =
+        normpath(joinpath(ENV["LIBCPPINTEROP_INSTALL_PREFIX"], "include"))
 else
-	# JLLMode
-	include("jllshim.jl")
-	using .JLLShim
+    # JLLMode
+    include("jllshim.jl")
+    using .JLLShim
 
-	using libcppinterop_jll
-	const libcppinterop_include = normpath(joinpath(libcppinterop_jll.artifact_dir, "include"))
+    using libcppinterop_jll
+    const libcppinterop_include =
+        normpath(joinpath(libcppinterop_jll.artifact_dir, "include"))
 end
 
 using LLVM
@@ -40,6 +46,9 @@ include(joinpath(libdir, "LibClang.jl"))
 include(joinpath(libdir, llvm_version, "LibCppInterOp.jl"))
 using .LibCppInterOp
 
-
+include("utilities.jl")
+include("version.jl")
+include("core.jl")
+include("api.jl")
 
 end

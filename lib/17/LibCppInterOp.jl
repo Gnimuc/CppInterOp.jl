@@ -95,11 +95,15 @@ function clang_CppInterOp_IsSmartPtrType(type)
 end
 
 function clang_CppInterOp_GetIntegerTypeFromEnumScope(scope)
-    @ccall libcppinterop.clang_CppInterOp_GetIntegerTypeFromEnumScope(scope::CXCppScope)::CXCppType
+    @ccall libcppinterop.clang_CppInterOp_GetIntegerTypeFromEnumScope(
+        scope::CXCppScope,
+    )::CXCppType
 end
 
 function clang_CppInterOp_GetIntegerTypeFromEnumType(type)
-    @ccall libcppinterop.clang_CppInterOp_GetIntegerTypeFromEnumType(type::CXCppType)::CXCppType
+    @ccall libcppinterop.clang_CppInterOp_GetIntegerTypeFromEnumType(
+        type::CXCppType,
+    )::CXCppType
 end
 
 struct CXCppScopeSet
@@ -108,7 +112,9 @@ struct CXCppScopeSet
 end
 
 function clang_CppInterOp_CXCppScopeSet_dispose(scopes)
-    @ccall libcppinterop.clang_CppInterOp_CXCppScopeSet_dispose(scopes::CXCppScopeSet)::Cvoid
+    @ccall libcppinterop.clang_CppInterOp_CXCppScopeSet_dispose(
+        scopes::CXCppScopeSet,
+    )::Cvoid
 end
 
 function clang_CppInterOp_GetEnumConstants(scope)
@@ -144,11 +150,15 @@ function clang_CppInterOp_GetQualifiedName(klass)
 end
 
 function clang_CppInterOp_GetQualifiedCompleteName(klass)
-    @ccall libcppinterop.clang_CppInterOp_GetQualifiedCompleteName(klass::CXCppType)::CXString
+    @ccall libcppinterop.clang_CppInterOp_GetQualifiedCompleteName(
+        klass::CXCppType,
+    )::CXString
 end
 
 function clang_CppInterOp_GetUsingNamespaces(scope)
-    @ccall libcppinterop.clang_CppInterOp_GetUsingNamespaces(scope::CXCppScope)::CXCppScopeSet
+    @ccall libcppinterop.clang_CppInterOp_GetUsingNamespaces(
+        scope::CXCppScope,
+    )::CXCppScopeSet
 end
 
 function clang_CppInterOp_GetGlobalScope()
@@ -160,15 +170,23 @@ function clang_CppInterOp_GetUnderlyingScope(scope)
 end
 
 function clang_CppInterOp_GetScope(name, parent)
-    @ccall libcppinterop.clang_CppInterOp_GetScope(name::Ptr{Cchar}, parent::CXCppScope)::CXCppScope
+    @ccall libcppinterop.clang_CppInterOp_GetScope(
+        name::Ptr{Cchar},
+        parent::CXCppScope,
+    )::CXCppScope
 end
 
 function clang_CppInterOp_GetScopeFromCompleteName(name)
-    @ccall libcppinterop.clang_CppInterOp_GetScopeFromCompleteName(name::Ptr{Cchar})::CXCppScope
+    @ccall libcppinterop.clang_CppInterOp_GetScopeFromCompleteName(
+        name::Ptr{Cchar},
+    )::CXCppScope
 end
 
 function clang_CppInterOp_GetNamed(name, parent)
-    @ccall libcppinterop.clang_CppInterOp_GetNamed(name::Ptr{Cchar}, parent::CXCppScope)::CXCppScope
+    @ccall libcppinterop.clang_CppInterOp_GetNamed(
+        name::Ptr{Cchar},
+        parent::CXCppScope,
+    )::CXCppScope
 end
 
 function clang_CppInterOp_GetParentScope(scope)
@@ -184,15 +202,24 @@ function clang_CppInterOp_GetNumBases(type)
 end
 
 function clang_CppInterOp_GetBaseClass(type, ibase)
-    @ccall libcppinterop.clang_CppInterOp_GetBaseClass(type::CXCppType, ibase::Csize_t)::CXCppScope
+    @ccall libcppinterop.clang_CppInterOp_GetBaseClass(
+        type::CXCppType,
+        ibase::Csize_t,
+    )::CXCppScope
 end
 
 function clang_CppInterOp_IsSubclass(derived, base)
-    @ccall libcppinterop.clang_CppInterOp_IsSubclass(derived::CXCppScope, base::CXCppScope)::Bool
+    @ccall libcppinterop.clang_CppInterOp_IsSubclass(
+        derived::CXCppScope,
+        base::CXCppScope,
+    )::Bool
 end
 
 function clang_CppInterOp_GetBaseClassOffset(derived, base)
-    @ccall libcppinterop.clang_CppInterOp_GetBaseClassOffset(derived::CXCppScope, base::CXCppScope)::Int64
+    @ccall libcppinterop.clang_CppInterOp_GetBaseClassOffset(
+        derived::CXCppScope,
+        base::CXCppScope,
+    )::Int64
 end
 
 struct CXCppFunctionSet
@@ -201,11 +228,15 @@ struct CXCppFunctionSet
 end
 
 function clang_CppInterOp_CXCppFunctionSet_dispose(funcs)
-    @ccall libcppinterop.clang_CppInterOp_CXCppFunctionSet_dispose(funcs::CXCppFunctionSet)::Cvoid
+    @ccall libcppinterop.clang_CppInterOp_CXCppFunctionSet_dispose(
+        funcs::CXCppFunctionSet,
+    )::Cvoid
 end
 
 function clang_CppInterOp_GetClassMethods(klass)
-    @ccall libcppinterop.clang_CppInterOp_GetClassMethods(klass::CXCppScope)::CXCppFunctionSet
+    @ccall libcppinterop.clang_CppInterOp_GetClassMethods(
+        klass::CXCppScope,
+    )::CXCppFunctionSet
 end
 
 function clang_CppInterOp_HasDefaultConstructor(scope)
@@ -213,7 +244,9 @@ function clang_CppInterOp_HasDefaultConstructor(scope)
 end
 
 function clang_CppInterOp_GetDefaultConstructor(scope)
-    @ccall libcppinterop.clang_CppInterOp_GetDefaultConstructor(scope::CXCppScope)::CXCppFunction
+    @ccall libcppinterop.clang_CppInterOp_GetDefaultConstructor(
+        scope::CXCppScope,
+    )::CXCppFunction
 end
 
 function clang_CppInterOp_GetDestructor(scope)
@@ -221,11 +254,16 @@ function clang_CppInterOp_GetDestructor(scope)
 end
 
 function clang_CppInterOp_GetFunctionsUsingName(scope, name)
-    @ccall libcppinterop.clang_CppInterOp_GetFunctionsUsingName(scope::CXCppScope, name::Ptr{Cchar})::CXCppFunctionSet
+    @ccall libcppinterop.clang_CppInterOp_GetFunctionsUsingName(
+        scope::CXCppScope,
+        name::Ptr{Cchar},
+    )::CXCppFunctionSet
 end
 
 function clang_CppInterOp_GetFunctionReturnType(func)
-    @ccall libcppinterop.clang_CppInterOp_GetFunctionReturnType(func::CXCppFunction)::CXCppType
+    @ccall libcppinterop.clang_CppInterOp_GetFunctionReturnType(
+        func::CXCppFunction,
+    )::CXCppType
 end
 
 function clang_CppInterOp_GetFunctionNumArgs(func)
@@ -233,19 +271,28 @@ function clang_CppInterOp_GetFunctionNumArgs(func)
 end
 
 function clang_CppInterOp_GetFunctionRequiredArgs(func)
-    @ccall libcppinterop.clang_CppInterOp_GetFunctionRequiredArgs(func::CXCppConstFunction)::Csize_t
+    @ccall libcppinterop.clang_CppInterOp_GetFunctionRequiredArgs(
+        func::CXCppConstFunction,
+    )::Csize_t
 end
 
 function clang_CppInterOp_GetFunctionArgType(func, iarg)
-    @ccall libcppinterop.clang_CppInterOp_GetFunctionArgType(func::CXCppFunction, iarg::Csize_t)::CXCppType
+    @ccall libcppinterop.clang_CppInterOp_GetFunctionArgType(
+        func::CXCppFunction,
+        iarg::Csize_t,
+    )::CXCppType
 end
 
 function clang_CppInterOp_GetFunctionSignature(func)
-    @ccall libcppinterop.clang_CppInterOp_GetFunctionSignature(func::CXCppFunction)::CXString
+    @ccall libcppinterop.clang_CppInterOp_GetFunctionSignature(
+        func::CXCppFunction,
+    )::CXString
 end
 
 function clang_CppInterOp_IsFunctionDeleted(_function)
-    @ccall libcppinterop.clang_CppInterOp_IsFunctionDeleted(_function::CXCppConstFunction)::Bool
+    @ccall libcppinterop.clang_CppInterOp_IsFunctionDeleted(
+        _function::CXCppConstFunction,
+    )::Bool
 end
 
 function clang_CppInterOp_IsTemplatedFunction(func)
@@ -253,7 +300,10 @@ function clang_CppInterOp_IsTemplatedFunction(func)
 end
 
 function clang_CppInterOp_ExistsFunctionTemplate(name, parent)
-    @ccall libcppinterop.clang_CppInterOp_ExistsFunctionTemplate(name::Ptr{Cchar}, parent::CXCppScope)::Bool
+    @ccall libcppinterop.clang_CppInterOp_ExistsFunctionTemplate(
+        name::Ptr{Cchar},
+        parent::CXCppScope,
+    )::Bool
 end
 
 function clang_CppInterOp_IsMethod(method)
@@ -285,11 +335,15 @@ function clang_CppInterOp_IsStaticMethod(method)
 end
 
 function clang_CppInterOp_GetFunctionAddressFromMangledName(mangled_name)
-    @ccall libcppinterop.clang_CppInterOp_GetFunctionAddressFromMangledName(mangled_name::Ptr{Cchar})::CXCppFuncAddr
+    @ccall libcppinterop.clang_CppInterOp_GetFunctionAddressFromMangledName(
+        mangled_name::Ptr{Cchar},
+    )::CXCppFuncAddr
 end
 
 function clang_CppInterOp_GetFunctionAddressFromMethod(method)
-    @ccall libcppinterop.clang_CppInterOp_GetFunctionAddressFromMethod(method::CXCppFunction)::CXCppFuncAddr
+    @ccall libcppinterop.clang_CppInterOp_GetFunctionAddressFromMethod(
+        method::CXCppFunction,
+    )::CXCppFuncAddr
 end
 
 function clang_CppInterOp_IsVirtualMethod(method)
@@ -301,7 +355,10 @@ function clang_CppInterOp_GetDatamembers(scope)
 end
 
 function clang_CppInterOp_LookupDatamember(name, parent)
-    @ccall libcppinterop.clang_CppInterOp_LookupDatamember(name::Ptr{Cchar}, parent::CXCppScope)::CXCppScope
+    @ccall libcppinterop.clang_CppInterOp_LookupDatamember(
+        name::Ptr{Cchar},
+        parent::CXCppScope,
+    )::CXCppScope
 end
 
 function clang_CppInterOp_GetVariableType(var)
@@ -365,11 +422,16 @@ function clang_CppInterOp_GetTypeFromScope(scope)
 end
 
 function clang_CppInterOp_IsTypeDerivedFrom(derived, base)
-    @ccall libcppinterop.clang_CppInterOp_IsTypeDerivedFrom(derived::CXCppType, base::CXCppType)::Bool
+    @ccall libcppinterop.clang_CppInterOp_IsTypeDerivedFrom(
+        derived::CXCppType,
+        base::CXCppType,
+    )::Bool
 end
 
 function clang_CppInterOp_MakeFunctionCallable(func)
-    @ccall libcppinterop.clang_CppInterOp_MakeFunctionCallable(func::CXCppConstFunction)::CXCppJitCall
+    @ccall libcppinterop.clang_CppInterOp_MakeFunctionCallable(
+        func::CXCppConstFunction,
+    )::CXCppJitCall
 end
 
 function clang_CppInterOp_CXCppJitCall_dispose(call)
@@ -381,15 +443,26 @@ function clang_CppInterOp_IsConstMethod(method)
 end
 
 function clang_CppInterOp_GetFunctionArgDefault(func, param_index)
-    @ccall libcppinterop.clang_CppInterOp_GetFunctionArgDefault(func::CXCppFunction, param_index::Csize_t)::CXString
+    @ccall libcppinterop.clang_CppInterOp_GetFunctionArgDefault(
+        func::CXCppFunction,
+        param_index::Csize_t,
+    )::CXString
 end
 
 function clang_CppInterOp_GetFunctionArgName(func, param_index)
-    @ccall libcppinterop.clang_CppInterOp_GetFunctionArgName(func::CXCppFunction, param_index::Csize_t)::CXString
+    @ccall libcppinterop.clang_CppInterOp_GetFunctionArgName(
+        func::CXCppFunction,
+        param_index::Csize_t,
+    )::CXString
 end
 
-function clang_CppInterOp_CreateInterpreter(Args, GpuArgs)
-    @ccall libcppinterop.clang_CppInterOp_CreateInterpreter(Args::Ptr{Cchar}, GpuArgs::Ptr{Cchar})::CXCppInterpreter
+function clang_CppInterOp_CreateInterpreter(args, num_args, gpu_args, num_gpu_args)
+    @ccall libcppinterop.clang_CppInterOp_CreateInterpreter(
+        args::Ptr{Ptr{Cchar}},
+        num_args::Csize_t,
+        gpu_args::Ptr{Ptr{Cchar}},
+        num_gpu_args::Csize_t,
+    )::CXCppInterpreter
 end
 
 function clang_CppInterOp_GetInterpreter()
@@ -397,7 +470,11 @@ function clang_CppInterOp_GetInterpreter()
 end
 
 function clang_CppInterOp_AddSearchPath(dir, isUser, prepend)
-    @ccall libcppinterop.clang_CppInterOp_AddSearchPath(dir::Ptr{Cchar}, isUser::Bool, prepend::Bool)::Cvoid
+    @ccall libcppinterop.clang_CppInterOp_AddSearchPath(
+        dir::Ptr{Cchar},
+        isUser::Bool,
+        prepend::Bool,
+    )::Cvoid
 end
 
 function clang_CppInterOp_GetResourceDir()
@@ -417,7 +494,10 @@ function clang_CppInterOp_Process(code)
 end
 
 function clang_CppInterOp_Evaluate(code, HadError)
-    @ccall libcppinterop.clang_CppInterOp_Evaluate(code::Ptr{Cchar}, HadError::Ptr{Bool})::intptr_t
+    @ccall libcppinterop.clang_CppInterOp_Evaluate(
+        code::Ptr{Cchar},
+        HadError::Ptr{Bool},
+    )::intptr_t
 end
 
 function clang_CppInterOp_LookupLibrary(lib_name)
@@ -425,7 +505,10 @@ function clang_CppInterOp_LookupLibrary(lib_name)
 end
 
 function clang_CppInterOp_LoadLibrary(lib_stem, lookup)
-    @ccall libcppinterop.clang_CppInterOp_LoadLibrary(lib_stem::Ptr{Cchar}, lookup::Bool)::Bool
+    @ccall libcppinterop.clang_CppInterOp_LoadLibrary(
+        lib_stem::Ptr{Cchar},
+        lookup::Bool,
+    )::Bool
 end
 
 function clang_CppInterOp_UnloadLibrary(lib_stem)
@@ -433,15 +516,24 @@ function clang_CppInterOp_UnloadLibrary(lib_stem)
 end
 
 function clang_CppInterOp_SearchLibrariesForSymbol(mangled_name, search_system)
-    @ccall libcppinterop.clang_CppInterOp_SearchLibrariesForSymbol(mangled_name::Ptr{Cchar}, search_system::Bool)::CXString
+    @ccall libcppinterop.clang_CppInterOp_SearchLibrariesForSymbol(
+        mangled_name::Ptr{Cchar},
+        search_system::Bool,
+    )::CXString
 end
 
 function clang_CppInterOp_InsertOrReplaceJitSymbol(linker_mangled_name, address)
-    @ccall libcppinterop.clang_CppInterOp_InsertOrReplaceJitSymbol(linker_mangled_name::Ptr{Cchar}, address::UInt64)::Bool
+    @ccall libcppinterop.clang_CppInterOp_InsertOrReplaceJitSymbol(
+        linker_mangled_name::Ptr{Cchar},
+        address::UInt64,
+    )::Bool
 end
 
 function clang_CppInterOp_ObjToString(type, obj)
-    @ccall libcppinterop.clang_CppInterOp_ObjToString(type::Ptr{Cchar}, obj::Ptr{Cvoid})::CXString
+    @ccall libcppinterop.clang_CppInterOp_ObjToString(
+        type::Ptr{Cchar},
+        obj::Ptr{Cvoid},
+    )::CXString
 end
 
 struct CXTemplateArgInfo
@@ -450,7 +542,11 @@ struct CXTemplateArgInfo
 end
 
 function clang_CppInterOp_InstantiateClassTemplate(tmpl, template_args, template_args_size)
-    @ccall libcppinterop.clang_CppInterOp_InstantiateClassTemplate(tmpl::CXCppScope, template_args::Ptr{CXTemplateArgInfo}, template_args_size::Csize_t)::CXCppScope
+    @ccall libcppinterop.clang_CppInterOp_InstantiateClassTemplate(
+        tmpl::CXCppScope,
+        template_args::Ptr{CXTemplateArgInfo},
+        template_args_size::Csize_t,
+    )::CXCppScope
 end
 
 struct CXTemplateArgInfoSet
@@ -459,19 +555,27 @@ struct CXTemplateArgInfoSet
 end
 
 function clang_CppInterOp_CXTemplateArgInfoSet_dispose(args)
-    @ccall libcppinterop.clang_CppInterOp_CXTemplateArgInfoSet_dispose(args::CXTemplateArgInfoSet)::Cvoid
+    @ccall libcppinterop.clang_CppInterOp_CXTemplateArgInfoSet_dispose(
+        args::CXTemplateArgInfoSet,
+    )::Cvoid
 end
 
 function clang_CppInterOp_GetClassTemplateInstantiationArgs(templ_instance)
-    @ccall libcppinterop.clang_CppInterOp_GetClassTemplateInstantiationArgs(templ_instance::CXCppScope)::CXTemplateArgInfoSet
+    @ccall libcppinterop.clang_CppInterOp_GetClassTemplateInstantiationArgs(
+        templ_instance::CXCppScope,
+    )::CXTemplateArgInfoSet
 end
 
 function clang_CppInterOp_InstantiateTemplateFunctionFromString(function_template)
-    @ccall libcppinterop.clang_CppInterOp_InstantiateTemplateFunctionFromString(function_template::Ptr{Cchar})::CXCppFunction
+    @ccall libcppinterop.clang_CppInterOp_InstantiateTemplateFunctionFromString(
+        function_template::Ptr{Cchar},
+    )::CXCppFunction
 end
 
 function clang_CppInterOp_GetAllCppNames(scope)
-    @ccall libcppinterop.clang_CppInterOp_GetAllCppNames(scope::CXCppScope)::Ptr{CXStringSet}
+    @ccall libcppinterop.clang_CppInterOp_GetAllCppNames(
+        scope::CXCppScope,
+    )::Ptr{CXStringSet}
 end
 
 function clang_CppInterOp_DumpScope(scope)
@@ -484,7 +588,9 @@ struct CXCppDimensions
 end
 
 function clang_CppInterOp_CXCppDimensions_dispose(dims)
-    @ccall libcppinterop.clang_CppInterOp_CXCppDimensions_dispose(dims::CXCppDimensions)::Cvoid
+    @ccall libcppinterop.clang_CppInterOp_CXCppDimensions_dispose(
+        dims::CXCppDimensions,
+    )::Cvoid
 end
 
 function clang_CppInterOp_GetDimensions(type)
@@ -496,15 +602,25 @@ function clang_CppInterOp_Allocate(scope)
 end
 
 function clang_CppInterOp_Deallocate(scope, address)
-    @ccall libcppinterop.clang_CppInterOp_Deallocate(scope::CXCppScope, address::CXCppObject)::Cvoid
+    @ccall libcppinterop.clang_CppInterOp_Deallocate(
+        scope::CXCppScope,
+        address::CXCppObject,
+    )::Cvoid
 end
 
 function clang_CppInterOp_Construct(scope, arena)
-    @ccall libcppinterop.clang_CppInterOp_Construct(scope::CXCppScope, arena::Ptr{Cvoid})::CXCppObject
+    @ccall libcppinterop.clang_CppInterOp_Construct(
+        scope::CXCppScope,
+        arena::Ptr{Cvoid},
+    )::CXCppObject
 end
 
 function clang_CppInterOp_Destruct(This, type, withFree)
-    @ccall libcppinterop.clang_CppInterOp_Destruct(This::CXCppObject, type::CXCppScope, withFree::Bool)::Cvoid
+    @ccall libcppinterop.clang_CppInterOp_Destruct(
+        This::CXCppObject,
+        type::CXCppScope,
+        withFree::Bool,
+    )::Cvoid
 end
 
 @enum CXCppCaptureStreamKind::UInt32 begin
@@ -513,7 +629,9 @@ end
 end
 
 function clang_CppInterOp_BeginStdStreamCapture(fd_kind)
-    @ccall libcppinterop.clang_CppInterOp_BeginStdStreamCapture(fd_kind::CXCppCaptureStreamKind)::Cvoid
+    @ccall libcppinterop.clang_CppInterOp_BeginStdStreamCapture(
+        fd_kind::CXCppCaptureStreamKind,
+    )::Cvoid
 end
 
 function clang_CppInterOp_EndStdStreamCapture()
@@ -522,7 +640,7 @@ end
 
 # exports
 const PREFIXES = ["clang", "CX"]
-for name in names(@__MODULE__; all=true), prefix in PREFIXES
+for name in names(@__MODULE__; all = true), prefix in PREFIXES
     if startswith(string(name), prefix)
         @eval export $name
     end

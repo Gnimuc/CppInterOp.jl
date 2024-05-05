@@ -1,6 +1,5 @@
 using CppInterOp
 using Test
 
-@testset "CppInterOp" begin
-    # Write your tests here.
-end
+include("version.jl")
+include("api.jl")
