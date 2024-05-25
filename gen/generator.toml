@@ -1,5 +1,5 @@
 [general]
-library_name = "libcppinterop"
+library_name = "libCppInterOpExtra"
 output_file_path = "LibCppInterOp.jl"
 module_name = "LibCppInterOp"
 export_symbol_prefixes = ["clang", "CX"]

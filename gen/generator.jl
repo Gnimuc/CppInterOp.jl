@@ -34,7 +34,7 @@ cd(@__DIR__) do
                 options["general"]["output_file_path"] = output_file_path
 
                 libclang_include_dir = joinpath(Clang_jll.artifact_dir, "include")
-                include_dir = joinpath(destdir(prefix, platform), "include")
+                include_dir = "/Users/gnimuc/Code/CppInterOp/install/include"
                 header_dir = joinpath(include_dir, "clang-c")
                 args = Generators.get_default_args()
                 push!(args, "-isystem$libclang_include_dir")

@@ -1,0 +1,12 @@
+coverage:
+  ignore:
+    - "lib"
+    - "res"
+  status:
+    patch: false
+    project: false
+    changes: false
+comment:
+  layout: " diff, files"
+  behavior: default
+  require_changes: false
