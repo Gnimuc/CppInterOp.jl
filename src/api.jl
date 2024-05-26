@@ -459,7 +459,7 @@ Evaluate(code::AbstractString, hadError=Ref{Bool}()) = clang_CppInterOp_Evaluate
 LookupLibrary(lib_name::AbstractString) =
     get_string(clang_CppInterOp_LookupLibrary(lib_name))
 
-LoadLibrary(lib_stem::AbstractString, lookup::Bool) =
+LoadLibrary(lib_stem::AbstractString, lookup::Bool=true) =
     clang_CppInterOp_LoadLibrary(lib_stem, lookup)
 
 UnloadLibrary(lib_stem::AbstractString) = clang_CppInterOp_UnloadLibrary(lib_stem)
