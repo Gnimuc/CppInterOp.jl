@@ -450,11 +450,11 @@ GetResourceDir() = unsafe_string(clang_CppInterOp_GetResourceDir())
 
 AddIncludePath(dir::AbstractString) = clang_CppInterOp_AddIncludePath(dir)
 
-Declare(code::AbstractString, silent::Bool) = clang_CppInterOp_Declare(code, silent)
+Declare(code::AbstractString, silent::Bool=false) = clang_CppInterOp_Declare(code, silent)
 
 Process(code::AbstractString) = clang_CppInterOp_Process(code)
 
-Evaluate(code::AbstractString, hadError) = clang_CppInterOp_Evaluate(code, hadError)
+Evaluate(code::AbstractString, hadError=Ref{Bool}()) = clang_CppInterOp_Evaluate(code, hadError)
 
 LookupLibrary(lib_name::AbstractString) =
     get_string(clang_CppInterOp_LookupLibrary(lib_name))
