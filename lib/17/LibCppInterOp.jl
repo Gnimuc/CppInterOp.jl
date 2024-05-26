@@ -520,40 +520,6 @@ function clang_CppInterOp_EndStdStreamCapture()
     @ccall libCppInterOpExtra.clang_CppInterOp_EndStdStreamCapture()::CXString
 end
 
-const CXInterpreter = Ptr{Cvoid}
-
-const CXCompilerInstance = Ptr{Cvoid}
-
-const CXPartialTranslationUnit = Ptr{Cvoid}
-
-function clang_IncrementalCompilerBuilder_create()
-    @ccall libCppInterOpExtra.clang_IncrementalCompilerBuilder_create()::CXInterpreter
-end
-
-function clang_Interpreter_create(CI)
-    @ccall libCppInterOpExtra.clang_Interpreter_create(CI::CXCompilerInstance)::CXInterpreter
-end
-
-function clang_Interpreter_dispose(Interp)
-    @ccall libCppInterOpExtra.clang_Interpreter_dispose(Interp::CXInterpreter)::Cvoid
-end
-
-function clang_Interpreter_getCompilerInstance(Interp)
-    @ccall libCppInterOpExtra.clang_Interpreter_getCompilerInstance(Interp::CXInterpreter)::CXCompilerInstance
-end
-
-function clang_Interpreter_Parse(Interp, Code)
-    @ccall libCppInterOpExtra.clang_Interpreter_Parse(Interp::CXInterpreter, Code::Ptr{Cchar})::CXPartialTranslationUnit
-end
-
-function clang_Interpreter_Execute(Interp, PTU)
-    @ccall libCppInterOpExtra.clang_Interpreter_Execute(Interp::CXInterpreter, PTU::CXPartialTranslationUnit)::Cvoid
-end
-
-function clang_Interpreter_ParseAndExecute(Interp, Code)
-    @ccall libCppInterOpExtra.clang_Interpreter_ParseAndExecute(Interp::CXInterpreter, Code::Ptr{Cchar})::Cvoid
-end
-
 # exports
 const PREFIXES = ["clang", "CX"]
 for name in names(@__MODULE__; all=true), prefix in PREFIXES
