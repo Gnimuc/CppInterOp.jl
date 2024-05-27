@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.25)
 
 project(CppInterOpExtra LANGUAGES CXX)
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 # Turn on using VS solution folders
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 

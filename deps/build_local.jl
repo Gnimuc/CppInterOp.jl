@@ -5,7 +5,7 @@ Pkg.activate(@__DIR__)
 Pkg.instantiate()
 
 if haskey(ENV, "GITHUB_ACTIONS")
-    println("::warning ::Using a locally-built CppInterOpExtra; A bump of CppInterOpExtra_jll will be required before releasing CppInterOp.jl.")
+    println("::warning ::Using a locally-built libCppInterOpExtra; A bump of libCppInterOpExtra_jll will be required before releasing CppInterOp.jl.")
 end
 
 using Pkg, Scratch, Preferences, Libdl, CMake_jll, libCppInterOp_jll
