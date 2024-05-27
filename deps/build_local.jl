@@ -8,7 +8,7 @@ if haskey(ENV, "GITHUB_ACTIONS")
     println("::warning ::Using a locally-built CppInterOpExtra; A bump of CppInterOpExtra_jll will be required before releasing CppInterOp.jl.")
 end
 
-using Pkg, Scratch, Preferences, Libdl, CMake_jll
+using Pkg, Scratch, Preferences, Libdl, CMake_jll, libCppInterOp_jll
 
 CppInterOp = Base.UUID("13f4c181-cae7-41d1-84d4-2ea5f5fafb15")
 
@@ -45,11 +45,12 @@ else
 end
 LLVM_DIR = joinpath(LLVM.artifact_dir, "lib", "cmake", "llvm")
 Clang_DIR = joinpath(LLVM.artifact_dir, "lib", "cmake", "clang")
+CppInterOp_DIR = joinpath(libCppInterOp_jll.artifact_dir, "lib", "cmake", "CppInterOp")
 
 # build and install
-@info "Building" source_dir scratch_dir build_dir LLVM_DIR Clang_DIR
+@info "Building" source_dir scratch_dir build_dir LLVM_DIR Clang_DIR CppInterOp_DIR
 cmake() do cmake_path
-    config_opts = `-DLLVM_DIR=$(LLVM_DIR) -DClang_DIR=$(Clang_DIR) -DCppInterOp_DIR= -DCMAKE_INSTALL_PREFIX=$(scratch_dir)`
+    config_opts = `-DLLVM_DIR=$(LLVM_DIR) -DClang_DIR=$(Clang_DIR) -DCppInterOp_DIR=$(CppInterOp_DIR) -DCMAKE_INSTALL_PREFIX=$(scratch_dir)`
     if Sys.iswindows()
         # prevent picking up MSVC
         config_opts = `$config_opts -G "MSYS Makefiles"`

@@ -29,35 +29,25 @@ using Clang_jll
 
 using Preferences
 
-# using CppInterOpExtra_jll
+# using libCppInterOpExtra_jll
 if has_preference(CppInterOp, "libCppInterOpExtra")
     const libCppInterOpExtra = load_preference(CppInterOp, "libCppInterOpExtra")
 else
-    if isdefined(CppInterOpExtra_jll, :libCppInterOpExtra)
-        import CppInterOpExtra_jll: libCppInterOpExtra
+    if isdefined(libCppInterOpExtra_jll, :libCppInterOpExtra)
+        import libCppInterOpExtra_jll: libCppInterOpExtra
     end
-end
-
-using LLVM
-
-llvm_version = if LLVM.version().major <= 16
-    error("Unsupported LLVM version: $(LLVM.version().major)")
-elseif LLVM.version().major == 17
-    "17"
-elseif LLVM.version().major == 18
-    "18"
-else # LLVM.version().major == 19
-    "19"
 end
 
 libdir = joinpath(@__DIR__, "..", "lib")
 
 include(joinpath(libdir, "LibClang.jl"))
 
-# const CLANG_BIN = joinpath(Clang_jll.artifact_dir, "bin", "clang")
-# const CLANG_INC = joinpath(Clang_jll.artifact_dir, "lib", "clang", llvm_version, "include")
+llvm_ver = Base.libllvm_version.major
 
-include(joinpath(libdir, llvm_version, "LibCppInterOp.jl"))
+# const CLANG_BIN = joinpath(Clang_jll.artifact_dir, "bin", "clang")
+# const CLANG_INC = joinpath(Clang_jll.artifact_dir, "lib", "clang", llvm_ver, "include")
+
+include(joinpath(libdir, llvm_ver, "LibCppInterOp.jl"))
 using .LibCppInterOp
 
 include("utilities.jl")
