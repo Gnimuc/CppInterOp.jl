@@ -60,10 +60,11 @@ cmake() do cmake_path
 end
 
 # discover built libraries
-built_libs = filter(readdir(joinpath(scratch_dir, "lib"))) do file
+lib_dir =  Sys.iswindows() ? "bin" : "lib"
+built_libs = filter(readdir(joinpath(scratch_dir, lib_dir))) do file
     endswith(file, ".$(Libdl.dlext)")
 end
-lib_path = joinpath(scratch_dir, "lib", only(built_libs))
+lib_path = joinpath(scratch_dir, lib_dir, only(built_libs))
 isfile(lib_path) || error("Could not find library $lib_path in build directory")
 
 # tell CppInterOp.jl to load our library instead of the default artifact one
