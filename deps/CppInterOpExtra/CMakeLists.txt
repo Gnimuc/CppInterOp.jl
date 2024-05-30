@@ -38,6 +38,7 @@ target_include_directories(CppInterOpExtra PUBLIC
 target_compile_features(CppInterOpExtra PRIVATE cxx_std_17)
 
 if (WIN32)
+    message(STATUS "Windows detected, adding `_CINDEX_LIB_` definition...")
     target_compile_definitions(CppInterOpExtra PUBLIC "_CINDEX_LIB_")
 endif(WIN32)
 
@@ -54,7 +55,7 @@ endif()
 # Install Binaries
 install(TARGETS CppInterOpExtra
         EXPORT CppInterOpExtraTargets
-        RUNTIME DESTINATION bin
+        RUNTIME DESTINATION lib
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib/static
         INCLUDES DESTINATION include/clang-c)
