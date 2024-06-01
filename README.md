@@ -16,18 +16,20 @@ julia --project=deps deps/build_local.jl
 Test the package by running:
 
 ```
-pkg> activate CppInterOp
+(@v1.12) pkg> activate CppInterOp
+  Activating project at `~/.julia/dev/CppInterOp`
+
+julia> using CppInterOp
 
 julia> import CppInterOp as Cpp
 
-julia> Cpp.CreateInterpreter()
-CppInterOp.CppInterpreter(Ptr{Nothing}(0x0000600001ee5180))
+julia> create_interpreter()
+CppInterOp.CppInterpreter(Ptr{Nothing}(0x0000600001585580))
 
-julia> Cpp.IsDebugOutputEnabled()
-false
+julia> Cpp.Declare("#include <iostream>")
+0
 
-julia> Cpp.EnableDebugOutput()
-
-julia> Cpp.IsDebugOutputEnabled()
-true
+julia> Cpp.Process("""std::cout << 42 << std::endl;""")
+42
+0
 ```
