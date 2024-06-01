@@ -1,7 +1,7 @@
 coverage:
   ignore:
     - "lib"
-    - "res"
+    - "gen"
   status:
     patch: false
     project: false
