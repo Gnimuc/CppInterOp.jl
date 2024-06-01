@@ -63,6 +63,6 @@ using Test
     end
 
     @testset "GetResourceDir" begin
-        @test endswith(Cpp.GetResourceDir(), "lib/clang/$(Cpp.llvm_version)")
+        @test endswith(normpath(Cpp.GetResourceDir()), normpath("lib/clang/$(Cpp.llvm_version)"))
     end
 end

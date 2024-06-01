@@ -1,6 +1,7 @@
 module CppInterOp
 
 using Clang_jll
+using libCppInterOp_jll
 # using libCppInterOpExtra_jll
 
 using Preferences
