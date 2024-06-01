@@ -2,15 +2,12 @@ cmake_minimum_required(VERSION 3.25)
 
 project(CppInterOpExtra LANGUAGES CXX)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -fno-rtti")
+
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 # Turn on using VS solution folders
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
-set(CMAKE_SKIP_BUILD_RPATH FALSE)
-set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
-set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 find_package(LLVM REQUIRED CONFIG)
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
@@ -26,8 +23,6 @@ message(STATUS "Using CppInterOpConfig.cmake in: ${CppInterOp_DIR}")
 add_library(CppInterOpExtra SHARED)
 add_subdirectory(lib)
 add_subdirectory(include)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
 
 target_include_directories(CppInterOpExtra PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

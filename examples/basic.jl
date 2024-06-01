@@ -1,6 +1,7 @@
+using CppInterOp
 import CppInterOp as Cpp
 
-Cpp.CreateInterpreter()
+create_interpreter()
 
 Cpp.EnableDebugOutput()
 

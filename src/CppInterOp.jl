@@ -23,10 +23,24 @@ include(joinpath(libdir, "LibClang.jl"))
 
 const llvm_version = string(Base.libllvm_version.major)
 
-const CLANG_INC = joinpath(Clang_jll.artifact_dir, "lib", "clang", llvm_version, "include")
-
 include(joinpath(libdir, llvm_version, "LibCppInterOp.jl"))
 using .LibCppInterOp
+
+include("platform/JLLEnvs.jl")
+using .JLLEnvs
+
+function create_interpreter(cpu_args=String[], gpu_args=String[]; is_cxx=true, version=JLLEnvs.GCC_MIN_VER)
+    env = JLLEnvs.get_default_env(; version, is_cxx)
+    args = ["-isystem" * dir for dir in JLLEnvs.get_system_includes(env)]
+    clang_inc = joinpath(Clang_jll.artifact_dir, "lib", "clang", llvm_version, "include")
+    push!(args, "-isystem" * clang_inc)
+    push!(args, "--target=$(JLLEnvs.target(env.platform))")
+    is_cxx && push!(args, "-nostdinc++", "-nostdlib++")
+    push!(args, "-nostdinc", "-nostdlib")
+    append!(args, cpu_args)
+    return CreateInterpreter(args, gpu_args)
+end
+export create_interpreter
 
 include("utilities.jl")
 include("version.jl")
