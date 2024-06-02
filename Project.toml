@@ -8,6 +8,7 @@ Clang_jll = "0ee61d77-7f21-5576-8119-9fcc46b10100"
 Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 Preferences = "21216c6a-2e73-6563-6e65-726566657250"
+libCppInterOpExtra_jll = "389a429b-44cc-5496-a6f5-f62ac9baf48b"
 libCppInterOp_jll = "2bd6b0f1-efc2-5146-be01-bc30fa938f5c"
 
 [compat]
