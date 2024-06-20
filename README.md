@@ -6,19 +6,12 @@
 ## Installation
 
 ```
-pkg> dev https://github.com/Gnimuc/CppInterOp.jl.git
+pkg> add https://github.com/Gnimuc/CppInterOp.jl.git
 ```
 
-```shell
-julia --project=deps deps/build_local.jl
-```
-
-Test the package by running:
+## Example
 
 ```
-(@v1.12) pkg> activate CppInterOp
-  Activating project at `~/.julia/dev/CppInterOp`
-
 julia> using CppInterOp
 
 julia> import CppInterOp as Cpp

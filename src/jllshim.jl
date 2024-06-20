@@ -3,7 +3,7 @@ module JLLShim
 using Preferences
 using Clang_jll
 using libCppInterOp_jll
-# using libCppInterOpExtra_jll
+using libCppInterOpExtra_jll
 using Libdl
 
 import ..CppInterOp: libCppInterOpExtra
