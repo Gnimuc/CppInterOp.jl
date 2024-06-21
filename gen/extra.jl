@@ -1,6 +1,5 @@
 using Clang.Generators
 using Clang.Clang_jll
-using libCppInterOp_jll
 
 @add_def intptr_t
 
@@ -35,7 +34,7 @@ cd(@__DIR__) do
                 options["general"]["output_file_path"] = output_file_path
 
                 libclang_include_dir = joinpath(Clang_jll.artifact_dir, "include")
-                # include_dir = joinpath(libCppInterOp_jll.artifact_dir, "include")
+                include_dir = joinpath(@__DIR__, "..", "deps", "CppInterOpExtra", "include")
                 header_dir = joinpath(include_dir, "clang-c")
                 args = Generators.get_default_args()
                 push!(args, "-isystem$libclang_include_dir")
