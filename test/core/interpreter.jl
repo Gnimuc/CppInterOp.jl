@@ -31,5 +31,13 @@ using Test
     @test Cpp.getKind(v) == Cpp.CXValue_Int
     Cpp.dispose(v)
 
+    s = Cpp.createValue()
+    @test Cpp.evaluate(I, "jl_symbol_name(jl_get_ARCH())", s)
+    @test Cpp.isManuallyAlloc(s) == false
+    @test Cpp.getKind(s) == Cpp.CXValue_PtrOrObj
+    @test Cpp.getPtr(s) != C_NULL
+    @test unsafe_string(Base.unsafe_convert(Ptr{UInt8}, Cpp.getPtr(s))) == string(Sys.ARCH)
+    Cpp.dispose(s)
+
     Cpp.dispose(I)
 end
