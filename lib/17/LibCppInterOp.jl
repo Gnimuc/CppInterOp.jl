@@ -1,7 +1,7 @@
 module LibCppInterOp
 
-using ..CppInterOp: libCppInterOpExtra
-using ..CppInterOp: CXString, CXStringSet
+using ..CppInterOp: libCppInterOp
+using ..CppInterOp: CXErrorCode, CXTypeKind, CXString, CXStringSet
 
 const intptr_t = Clong
 
@@ -11,25 +11,25 @@ mutable struct CXInterpreterImpl end
 const CXInterpreter = Ptr{CXInterpreterImpl}
 
 function clang_createInterpreter(argv, argc)
-    @ccall libCppInterOpExtra.clang_createInterpreter(argv::Ptr{Ptr{Cchar}}, argc::Cint)::CXInterpreter
+    @ccall libCppInterOp.clang_createInterpreter(argv::Ptr{Ptr{Cchar}}, argc::Cint)::CXInterpreter
 end
 
 const TInterp_t = Ptr{Cvoid}
 
 function clang_createInterpreterFromPtr(I)
-    @ccall libCppInterOpExtra.clang_createInterpreterFromPtr(I::TInterp_t)::CXInterpreter
+    @ccall libCppInterOp.clang_createInterpreterFromPtr(I::TInterp_t)::CXInterpreter
 end
 
 function clang_interpreter_getInterpreterAsPtr(I)
-    @ccall libCppInterOpExtra.clang_interpreter_getInterpreterAsPtr(I::CXInterpreter)::TInterp_t
+    @ccall libCppInterOp.clang_interpreter_getInterpreterAsPtr(I::CXInterpreter)::TInterp_t
 end
 
 function clang_interpreter_takeInterpreterAsPtr(I)
-    @ccall libCppInterOpExtra.clang_interpreter_takeInterpreterAsPtr(I::CXInterpreter)::TInterp_t
+    @ccall libCppInterOp.clang_interpreter_takeInterpreterAsPtr(I::CXInterpreter)::TInterp_t
 end
 
 function clang_interpreter_dispose(I)
-    @ccall libCppInterOpExtra.clang_interpreter_dispose(I::CXInterpreter)::Cvoid
+    @ccall libCppInterOp.clang_interpreter_dispose(I::CXInterpreter)::Cvoid
 end
 
 @enum CXInterpreter_CompilationResult::UInt32 begin
@@ -39,64 +39,64 @@ end
 end
 
 function clang_interpreter_addSearchPath(I, dir, isUser, prepend)
-    @ccall libCppInterOpExtra.clang_interpreter_addSearchPath(I::CXInterpreter, dir::Ptr{Cchar}, isUser::Bool, prepend::Bool)::Cvoid
+    @ccall libCppInterOp.clang_interpreter_addSearchPath(I::CXInterpreter, dir::Ptr{Cchar}, isUser::Bool, prepend::Bool)::Cvoid
 end
 
 function clang_interpreter_getResourceDir(I)
-    @ccall libCppInterOpExtra.clang_interpreter_getResourceDir(I::CXInterpreter)::Ptr{Cchar}
+    @ccall libCppInterOp.clang_interpreter_getResourceDir(I::CXInterpreter)::Ptr{Cchar}
 end
 
 function clang_interpreter_addIncludePath(I, dir)
-    @ccall libCppInterOpExtra.clang_interpreter_addIncludePath(I::CXInterpreter, dir::Ptr{Cchar})::Cvoid
+    @ccall libCppInterOp.clang_interpreter_addIncludePath(I::CXInterpreter, dir::Ptr{Cchar})::Cvoid
 end
 
 function clang_interpreter_declare(I, code, silent)
-    @ccall libCppInterOpExtra.clang_interpreter_declare(I::CXInterpreter, code::Ptr{Cchar}, silent::Bool)::CXErrorCode
+    @ccall libCppInterOp.clang_interpreter_declare(I::CXInterpreter, code::Ptr{Cchar}, silent::Bool)::CXErrorCode
 end
 
 function clang_interpreter_process(I, code)
-    @ccall libCppInterOpExtra.clang_interpreter_process(I::CXInterpreter, code::Ptr{Cchar})::CXErrorCode
+    @ccall libCppInterOp.clang_interpreter_process(I::CXInterpreter, code::Ptr{Cchar})::CXErrorCode
 end
 
 const CXValue = Ptr{Cvoid}
 
 # no prototype is found for this function at CXCppInterOp.h:147:9, please use with caution
 function clang_createValue()
-    @ccall libCppInterOpExtra.clang_createValue()::CXValue
+    @ccall libCppInterOp.clang_createValue()::CXValue
 end
 
 function clang_value_dispose(V)
-    @ccall libCppInterOpExtra.clang_value_dispose(V::CXValue)::Cvoid
+    @ccall libCppInterOp.clang_value_dispose(V::CXValue)::Cvoid
 end
 
 function clang_interpreter_evaluate(I, code, V)
-    @ccall libCppInterOpExtra.clang_interpreter_evaluate(I::CXInterpreter, code::Ptr{Cchar}, V::CXValue)::CXErrorCode
+    @ccall libCppInterOp.clang_interpreter_evaluate(I::CXInterpreter, code::Ptr{Cchar}, V::CXValue)::CXErrorCode
 end
 
 function clang_interpreter_lookupLibrary(I, lib_name)
-    @ccall libCppInterOpExtra.clang_interpreter_lookupLibrary(I::CXInterpreter, lib_name::Ptr{Cchar})::CXString
+    @ccall libCppInterOp.clang_interpreter_lookupLibrary(I::CXInterpreter, lib_name::Ptr{Cchar})::CXString
 end
 
 function clang_interpreter_loadLibrary(I, lib_stem, lookup)
-    @ccall libCppInterOpExtra.clang_interpreter_loadLibrary(I::CXInterpreter, lib_stem::Ptr{Cchar}, lookup::Bool)::CXInterpreter_CompilationResult
+    @ccall libCppInterOp.clang_interpreter_loadLibrary(I::CXInterpreter, lib_stem::Ptr{Cchar}, lookup::Bool)::CXInterpreter_CompilationResult
 end
 
 function clang_interpreter_unloadLibrary(I, lib_stem)
-    @ccall libCppInterOpExtra.clang_interpreter_unloadLibrary(I::CXInterpreter, lib_stem::Ptr{Cchar})::Cvoid
+    @ccall libCppInterOp.clang_interpreter_unloadLibrary(I::CXInterpreter, lib_stem::Ptr{Cchar})::Cvoid
 end
 
 function clang_interpreter_searchLibrariesForSymbol(I, mangled_name, search_system)
-    @ccall libCppInterOpExtra.clang_interpreter_searchLibrariesForSymbol(I::CXInterpreter, mangled_name::Ptr{Cchar}, search_system::Bool)::CXString
+    @ccall libCppInterOp.clang_interpreter_searchLibrariesForSymbol(I::CXInterpreter, mangled_name::Ptr{Cchar}, search_system::Bool)::CXString
 end
 
 function clang_interpreter_insertOrReplaceJitSymbol(I, linker_mangled_name, address)
-    @ccall libCppInterOpExtra.clang_interpreter_insertOrReplaceJitSymbol(I::CXInterpreter, linker_mangled_name::Ptr{Cchar}, address::UInt64)::Bool
+    @ccall libCppInterOp.clang_interpreter_insertOrReplaceJitSymbol(I::CXInterpreter, linker_mangled_name::Ptr{Cchar}, address::UInt64)::Bool
 end
 
 const CXFuncAddr = Ptr{Cvoid}
 
 function clang_interpreter_getFunctionAddressFromMangledName(I, mangled_name)
-    @ccall libCppInterOpExtra.clang_interpreter_getFunctionAddressFromMangledName(I::CXInterpreter, mangled_name::Ptr{Cchar})::CXFuncAddr
+    @ccall libCppInterOp.clang_interpreter_getFunctionAddressFromMangledName(I::CXInterpreter, mangled_name::Ptr{Cchar})::CXFuncAddr
 end
 
 struct CXQualType
@@ -106,55 +106,55 @@ struct CXQualType
 end
 
 function clang_qualtype_isBuiltin(type)
-    @ccall libCppInterOpExtra.clang_qualtype_isBuiltin(type::CXQualType)::Bool
+    @ccall libCppInterOp.clang_qualtype_isBuiltin(type::CXQualType)::Bool
 end
 
 function clang_qualtype_isEnumType(type)
-    @ccall libCppInterOpExtra.clang_qualtype_isEnumType(type::CXQualType)::Bool
+    @ccall libCppInterOp.clang_qualtype_isEnumType(type::CXQualType)::Bool
 end
 
 function clang_qualtype_isSmartPtrType(type)
-    @ccall libCppInterOpExtra.clang_qualtype_isSmartPtrType(type::CXQualType)::Bool
+    @ccall libCppInterOp.clang_qualtype_isSmartPtrType(type::CXQualType)::Bool
 end
 
 function clang_scope_isRecordType(type)
-    @ccall libCppInterOpExtra.clang_scope_isRecordType(type::CXQualType)::Bool
+    @ccall libCppInterOp.clang_scope_isRecordType(type::CXQualType)::Bool
 end
 
 function clang_scope_isPODType(type)
-    @ccall libCppInterOpExtra.clang_scope_isPODType(type::CXQualType)::Bool
+    @ccall libCppInterOp.clang_scope_isPODType(type::CXQualType)::Bool
 end
 
 function clang_qualtype_getIntegerTypeFromEnumType(type)
-    @ccall libCppInterOpExtra.clang_qualtype_getIntegerTypeFromEnumType(type::CXQualType)::CXQualType
+    @ccall libCppInterOp.clang_qualtype_getIntegerTypeFromEnumType(type::CXQualType)::CXQualType
 end
 
 function clang_qualtype_getUnderlyingType(type)
-    @ccall libCppInterOpExtra.clang_qualtype_getUnderlyingType(type::CXQualType)::CXQualType
+    @ccall libCppInterOp.clang_qualtype_getUnderlyingType(type::CXQualType)::CXQualType
 end
 
 function clang_qualtype_getTypeAsString(type)
-    @ccall libCppInterOpExtra.clang_qualtype_getTypeAsString(type::CXQualType)::CXString
+    @ccall libCppInterOp.clang_qualtype_getTypeAsString(type::CXQualType)::CXString
 end
 
 function clang_qualtype_getCanonicalType(type)
-    @ccall libCppInterOpExtra.clang_qualtype_getCanonicalType(type::CXQualType)::CXQualType
+    @ccall libCppInterOp.clang_qualtype_getCanonicalType(type::CXQualType)::CXQualType
 end
 
 function clang_qualtype_getType(I, name)
-    @ccall libCppInterOpExtra.clang_qualtype_getType(I::CXInterpreter, name::Ptr{Cchar})::CXQualType
+    @ccall libCppInterOp.clang_qualtype_getType(I::CXInterpreter, name::Ptr{Cchar})::CXQualType
 end
 
 function clang_qualtype_getComplexType(eltype)
-    @ccall libCppInterOpExtra.clang_qualtype_getComplexType(eltype::CXQualType)::CXQualType
+    @ccall libCppInterOp.clang_qualtype_getComplexType(eltype::CXQualType)::CXQualType
 end
 
 function clang_qualtype_getSizeOfType(type)
-    @ccall libCppInterOpExtra.clang_qualtype_getSizeOfType(type::CXQualType)::Csize_t
+    @ccall libCppInterOp.clang_qualtype_getSizeOfType(type::CXQualType)::Csize_t
 end
 
 function clang_qualtype_isTypeDerivedFrom(derived, base)
-    @ccall libCppInterOpExtra.clang_qualtype_isTypeDerivedFrom(derived::CXQualType, base::CXQualType)::Bool
+    @ccall libCppInterOp.clang_qualtype_isTypeDerivedFrom(derived::CXQualType, base::CXQualType)::Bool
 end
 
 @enum CXScopeKind::UInt32 begin
@@ -175,63 +175,63 @@ struct CXScope
 end
 
 function clang_scope_dump(S)
-    @ccall libCppInterOpExtra.clang_scope_dump(S::CXScope)::Cvoid
+    @ccall libCppInterOp.clang_scope_dump(S::CXScope)::Cvoid
 end
 
 function clang_scope_getTypeFromScope(S)
-    @ccall libCppInterOpExtra.clang_scope_getTypeFromScope(S::CXScope)::CXQualType
+    @ccall libCppInterOp.clang_scope_getTypeFromScope(S::CXScope)::CXQualType
 end
 
 function clang_scope_isAggregate(S)
-    @ccall libCppInterOpExtra.clang_scope_isAggregate(S::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isAggregate(S::CXScope)::Bool
 end
 
 function clang_scope_isNamespace(S)
-    @ccall libCppInterOpExtra.clang_scope_isNamespace(S::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isNamespace(S::CXScope)::Bool
 end
 
 function clang_scope_isClass(S)
-    @ccall libCppInterOpExtra.clang_scope_isClass(S::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isClass(S::CXScope)::Bool
 end
 
 function clang_scope_isComplete(S)
-    @ccall libCppInterOpExtra.clang_scope_isComplete(S::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isComplete(S::CXScope)::Bool
 end
 
 function clang_scope_sizeOf(S)
-    @ccall libCppInterOpExtra.clang_scope_sizeOf(S::CXScope)::Csize_t
+    @ccall libCppInterOp.clang_scope_sizeOf(S::CXScope)::Csize_t
 end
 
 function clang_scope_isTemplate(S)
-    @ccall libCppInterOpExtra.clang_scope_isTemplate(S::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isTemplate(S::CXScope)::Bool
 end
 
 function clang_scope_isTemplateSpecialization(S)
-    @ccall libCppInterOpExtra.clang_scope_isTemplateSpecialization(S::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isTemplateSpecialization(S::CXScope)::Bool
 end
 
 function clang_scope_isTypedefed(S)
-    @ccall libCppInterOpExtra.clang_scope_isTypedefed(S::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isTypedefed(S::CXScope)::Bool
 end
 
 function clang_scope_isAbstract(S)
-    @ccall libCppInterOpExtra.clang_scope_isAbstract(S::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isAbstract(S::CXScope)::Bool
 end
 
 function clang_scope_isEnumScope(S)
-    @ccall libCppInterOpExtra.clang_scope_isEnumScope(S::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isEnumScope(S::CXScope)::Bool
 end
 
 function clang_scope_isEnumConstant(S)
-    @ccall libCppInterOpExtra.clang_scope_isEnumConstant(S::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isEnumConstant(S::CXScope)::Bool
 end
 
 function clang_scope_getEnums(S)
-    @ccall libCppInterOpExtra.clang_scope_getEnums(S::CXScope)::Ptr{CXStringSet}
+    @ccall libCppInterOp.clang_scope_getEnums(S::CXScope)::Ptr{CXStringSet}
 end
 
 function clang_scope_getIntegerTypeFromEnumScope(S)
-    @ccall libCppInterOpExtra.clang_scope_getIntegerTypeFromEnumScope(S::CXScope)::CXQualType
+    @ccall libCppInterOp.clang_scope_getIntegerTypeFromEnumScope(S::CXScope)::CXQualType
 end
 
 struct CXScopeSet
@@ -240,191 +240,191 @@ struct CXScopeSet
 end
 
 function clang_disposeScopeSet(set)
-    @ccall libCppInterOpExtra.clang_disposeScopeSet(set::Ptr{CXScopeSet})::Cvoid
+    @ccall libCppInterOp.clang_disposeScopeSet(set::Ptr{CXScopeSet})::Cvoid
 end
 
 function clang_scope_getEnumConstants(S)
-    @ccall libCppInterOpExtra.clang_scope_getEnumConstants(S::CXScope)::Ptr{CXScopeSet}
+    @ccall libCppInterOp.clang_scope_getEnumConstants(S::CXScope)::Ptr{CXScopeSet}
 end
 
 function clang_scope_getEnumConstantType(S)
-    @ccall libCppInterOpExtra.clang_scope_getEnumConstantType(S::CXScope)::CXQualType
+    @ccall libCppInterOp.clang_scope_getEnumConstantType(S::CXScope)::CXQualType
 end
 
 function clang_scope_getEnumConstantValue(S)
-    @ccall libCppInterOpExtra.clang_scope_getEnumConstantValue(S::CXScope)::Csize_t
+    @ccall libCppInterOp.clang_scope_getEnumConstantValue(S::CXScope)::Csize_t
 end
 
 function clang_scope_isVariable(S)
-    @ccall libCppInterOpExtra.clang_scope_isVariable(S::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isVariable(S::CXScope)::Bool
 end
 
 function clang_scope_getName(S)
-    @ccall libCppInterOpExtra.clang_scope_getName(S::CXScope)::CXString
+    @ccall libCppInterOp.clang_scope_getName(S::CXScope)::CXString
 end
 
 function clang_scope_getCompleteName(S)
-    @ccall libCppInterOpExtra.clang_scope_getCompleteName(S::CXScope)::CXString
+    @ccall libCppInterOp.clang_scope_getCompleteName(S::CXScope)::CXString
 end
 
 function clang_scope_getQualifiedName(S)
-    @ccall libCppInterOpExtra.clang_scope_getQualifiedName(S::CXScope)::CXString
+    @ccall libCppInterOp.clang_scope_getQualifiedName(S::CXScope)::CXString
 end
 
 function clang_scope_getQualifiedCompleteName(S)
-    @ccall libCppInterOpExtra.clang_scope_getQualifiedCompleteName(S::CXScope)::CXString
+    @ccall libCppInterOp.clang_scope_getQualifiedCompleteName(S::CXScope)::CXString
 end
 
 function clang_scope_getUsingNamespaces(S)
-    @ccall libCppInterOpExtra.clang_scope_getUsingNamespaces(S::CXScope)::Ptr{CXScopeSet}
+    @ccall libCppInterOp.clang_scope_getUsingNamespaces(S::CXScope)::Ptr{CXScopeSet}
 end
 
 function clang_scope_getGlobalScope(I)
-    @ccall libCppInterOpExtra.clang_scope_getGlobalScope(I::CXInterpreter)::CXScope
+    @ccall libCppInterOp.clang_scope_getGlobalScope(I::CXInterpreter)::CXScope
 end
 
 function clang_scope_getUnderlyingScope(S)
-    @ccall libCppInterOpExtra.clang_scope_getUnderlyingScope(S::CXScope)::CXScope
+    @ccall libCppInterOp.clang_scope_getUnderlyingScope(S::CXScope)::CXScope
 end
 
 function clang_scope_getScope(name, parent)
-    @ccall libCppInterOpExtra.clang_scope_getScope(name::Ptr{Cchar}, parent::CXScope)::CXScope
+    @ccall libCppInterOp.clang_scope_getScope(name::Ptr{Cchar}, parent::CXScope)::CXScope
 end
 
 function clang_scope_getNamed(name, parent)
-    @ccall libCppInterOpExtra.clang_scope_getNamed(name::Ptr{Cchar}, parent::CXScope)::CXScope
+    @ccall libCppInterOp.clang_scope_getNamed(name::Ptr{Cchar}, parent::CXScope)::CXScope
 end
 
 function clang_scope_getParentScope(parent)
-    @ccall libCppInterOpExtra.clang_scope_getParentScope(parent::CXScope)::CXScope
+    @ccall libCppInterOp.clang_scope_getParentScope(parent::CXScope)::CXScope
 end
 
 function clang_scope_getScopeFromType(type)
-    @ccall libCppInterOpExtra.clang_scope_getScopeFromType(type::CXQualType)::CXScope
+    @ccall libCppInterOp.clang_scope_getScopeFromType(type::CXQualType)::CXScope
 end
 
 function clang_scope_getNumBases(S)
-    @ccall libCppInterOpExtra.clang_scope_getNumBases(S::CXScope)::Csize_t
+    @ccall libCppInterOp.clang_scope_getNumBases(S::CXScope)::Csize_t
 end
 
 function clang_scope_getBaseClass(S, ibase)
-    @ccall libCppInterOpExtra.clang_scope_getBaseClass(S::CXScope, ibase::Csize_t)::CXScope
+    @ccall libCppInterOp.clang_scope_getBaseClass(S::CXScope, ibase::Csize_t)::CXScope
 end
 
 function clang_scope_isSubclass(derived, base)
-    @ccall libCppInterOpExtra.clang_scope_isSubclass(derived::CXScope, base::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isSubclass(derived::CXScope, base::CXScope)::Bool
 end
 
 function clang_scope_getBaseClassOffset(derived, base)
-    @ccall libCppInterOpExtra.clang_scope_getBaseClassOffset(derived::CXScope, base::CXScope)::Int64
+    @ccall libCppInterOp.clang_scope_getBaseClassOffset(derived::CXScope, base::CXScope)::Int64
 end
 
 function clang_scope_getClassMethods(S)
-    @ccall libCppInterOpExtra.clang_scope_getClassMethods(S::CXScope)::Ptr{CXScopeSet}
+    @ccall libCppInterOp.clang_scope_getClassMethods(S::CXScope)::Ptr{CXScopeSet}
 end
 
 function clang_scope_getFunctionTemplatedDecls(S)
-    @ccall libCppInterOpExtra.clang_scope_getFunctionTemplatedDecls(S::CXScope)::Ptr{CXScopeSet}
+    @ccall libCppInterOp.clang_scope_getFunctionTemplatedDecls(S::CXScope)::Ptr{CXScopeSet}
 end
 
 function clang_scope_hasDefaultConstructor(S)
-    @ccall libCppInterOpExtra.clang_scope_hasDefaultConstructor(S::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_hasDefaultConstructor(S::CXScope)::Bool
 end
 
 function clang_scope_getDefaultConstructor(S)
-    @ccall libCppInterOpExtra.clang_scope_getDefaultConstructor(S::CXScope)::CXScope
+    @ccall libCppInterOp.clang_scope_getDefaultConstructor(S::CXScope)::CXScope
 end
 
 function clang_scope_getDestructor(S)
-    @ccall libCppInterOpExtra.clang_scope_getDestructor(S::CXScope)::CXScope
+    @ccall libCppInterOp.clang_scope_getDestructor(S::CXScope)::CXScope
 end
 
 function clang_scope_getFunctionsUsingName(S, name)
-    @ccall libCppInterOpExtra.clang_scope_getFunctionsUsingName(S::CXScope, name::Ptr{Cchar})::Ptr{CXScopeSet}
+    @ccall libCppInterOp.clang_scope_getFunctionsUsingName(S::CXScope, name::Ptr{Cchar})::Ptr{CXScopeSet}
 end
 
 function clang_scope_getFunctionReturnType(func)
-    @ccall libCppInterOpExtra.clang_scope_getFunctionReturnType(func::CXScope)::CXQualType
+    @ccall libCppInterOp.clang_scope_getFunctionReturnType(func::CXScope)::CXQualType
 end
 
 function clang_scope_getFunctionNumArgs(func)
-    @ccall libCppInterOpExtra.clang_scope_getFunctionNumArgs(func::CXScope)::Csize_t
+    @ccall libCppInterOp.clang_scope_getFunctionNumArgs(func::CXScope)::Csize_t
 end
 
 function clang_scope_getFunctionRequiredArgs(func)
-    @ccall libCppInterOpExtra.clang_scope_getFunctionRequiredArgs(func::CXScope)::Csize_t
+    @ccall libCppInterOp.clang_scope_getFunctionRequiredArgs(func::CXScope)::Csize_t
 end
 
 function clang_scope_getFunctionArgType(func, iarg)
-    @ccall libCppInterOpExtra.clang_scope_getFunctionArgType(func::CXScope, iarg::Csize_t)::CXQualType
+    @ccall libCppInterOp.clang_scope_getFunctionArgType(func::CXScope, iarg::Csize_t)::CXQualType
 end
 
 function clang_scope_getFunctionSignature(func)
-    @ccall libCppInterOpExtra.clang_scope_getFunctionSignature(func::CXScope)::CXString
+    @ccall libCppInterOp.clang_scope_getFunctionSignature(func::CXScope)::CXString
 end
 
 function clang_scope_isFunctionDeleted(func)
-    @ccall libCppInterOpExtra.clang_scope_isFunctionDeleted(func::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isFunctionDeleted(func::CXScope)::Bool
 end
 
 function clang_scope_isTemplatedFunction(func)
-    @ccall libCppInterOpExtra.clang_scope_isTemplatedFunction(func::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isTemplatedFunction(func::CXScope)::Bool
 end
 
 function clang_scope_existsFunctionTemplate(name, parent)
-    @ccall libCppInterOpExtra.clang_scope_existsFunctionTemplate(name::Ptr{Cchar}, parent::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_existsFunctionTemplate(name::Ptr{Cchar}, parent::CXScope)::Bool
 end
 
 function clang_scope_getClassTemplatedMethods(name, parent)
-    @ccall libCppInterOpExtra.clang_scope_getClassTemplatedMethods(name::Ptr{Cchar}, parent::CXScope)::Ptr{CXScopeSet}
+    @ccall libCppInterOp.clang_scope_getClassTemplatedMethods(name::Ptr{Cchar}, parent::CXScope)::Ptr{CXScopeSet}
 end
 
 function clang_scope_isMethod(method)
-    @ccall libCppInterOpExtra.clang_scope_isMethod(method::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isMethod(method::CXScope)::Bool
 end
 
 function clang_scope_isPublicMethod(method)
-    @ccall libCppInterOpExtra.clang_scope_isPublicMethod(method::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isPublicMethod(method::CXScope)::Bool
 end
 
 function clang_scope_isProtectedMethod(method)
-    @ccall libCppInterOpExtra.clang_scope_isProtectedMethod(method::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isProtectedMethod(method::CXScope)::Bool
 end
 
 function clang_scope_isPrivateMethod(method)
-    @ccall libCppInterOpExtra.clang_scope_isPrivateMethod(method::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isPrivateMethod(method::CXScope)::Bool
 end
 
 function clang_scope_isConstructor(method)
-    @ccall libCppInterOpExtra.clang_scope_isConstructor(method::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isConstructor(method::CXScope)::Bool
 end
 
 function clang_scope_isDestructor(method)
-    @ccall libCppInterOpExtra.clang_scope_isDestructor(method::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isDestructor(method::CXScope)::Bool
 end
 
 function clang_scope_isStaticMethod(method)
-    @ccall libCppInterOpExtra.clang_scope_isStaticMethod(method::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isStaticMethod(method::CXScope)::Bool
 end
 
 function clang_scope_getFunctionAddress(method)
-    @ccall libCppInterOpExtra.clang_scope_getFunctionAddress(method::CXScope)::CXFuncAddr
+    @ccall libCppInterOp.clang_scope_getFunctionAddress(method::CXScope)::CXFuncAddr
 end
 
 function clang_scope_isVirtualMethod(method)
-    @ccall libCppInterOpExtra.clang_scope_isVirtualMethod(method::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isVirtualMethod(method::CXScope)::Bool
 end
 
 function clang_scope_isConstMethod(method)
-    @ccall libCppInterOpExtra.clang_scope_isConstMethod(method::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isConstMethod(method::CXScope)::Bool
 end
 
 function clang_scope_getFunctionArgDefault(func, param_index)
-    @ccall libCppInterOpExtra.clang_scope_getFunctionArgDefault(func::CXScope, param_index::Csize_t)::CXString
+    @ccall libCppInterOp.clang_scope_getFunctionArgDefault(func::CXScope, param_index::Csize_t)::CXString
 end
 
 function clang_scope_getFunctionArgName(func, param_index)
-    @ccall libCppInterOpExtra.clang_scope_getFunctionArgName(func::CXScope, param_index::Csize_t)::CXString
+    @ccall libCppInterOp.clang_scope_getFunctionArgName(func::CXScope, param_index::Csize_t)::CXString
 end
 
 struct CXTemplateArgInfo
@@ -433,61 +433,61 @@ struct CXTemplateArgInfo
 end
 
 function clang_scope_instantiateTemplate(tmpl, template_args, template_args_size)
-    @ccall libCppInterOpExtra.clang_scope_instantiateTemplate(tmpl::CXScope, template_args::Ptr{CXTemplateArgInfo}, template_args_size::Csize_t)::CXScope
+    @ccall libCppInterOp.clang_scope_instantiateTemplate(tmpl::CXScope, template_args::Ptr{CXTemplateArgInfo}, template_args_size::Csize_t)::CXScope
 end
 
 function clang_scope_getDatamembers(S)
-    @ccall libCppInterOpExtra.clang_scope_getDatamembers(S::CXScope)::Ptr{CXScopeSet}
+    @ccall libCppInterOp.clang_scope_getDatamembers(S::CXScope)::Ptr{CXScopeSet}
 end
 
 function clang_scope_lookupDatamember(name, parent)
-    @ccall libCppInterOpExtra.clang_scope_lookupDatamember(name::Ptr{Cchar}, parent::CXScope)::CXScope
+    @ccall libCppInterOp.clang_scope_lookupDatamember(name::Ptr{Cchar}, parent::CXScope)::CXScope
 end
 
 function clang_scope_getVariableType(var)
-    @ccall libCppInterOpExtra.clang_scope_getVariableType(var::CXScope)::CXQualType
+    @ccall libCppInterOp.clang_scope_getVariableType(var::CXScope)::CXQualType
 end
 
 function clang_scope_getVariableOffset(var)
-    @ccall libCppInterOpExtra.clang_scope_getVariableOffset(var::CXScope)::intptr_t
+    @ccall libCppInterOp.clang_scope_getVariableOffset(var::CXScope)::intptr_t
 end
 
 function clang_scope_isPublicVariable(var)
-    @ccall libCppInterOpExtra.clang_scope_isPublicVariable(var::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isPublicVariable(var::CXScope)::Bool
 end
 
 function clang_scope_isProtectedVariable(var)
-    @ccall libCppInterOpExtra.clang_scope_isProtectedVariable(var::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isProtectedVariable(var::CXScope)::Bool
 end
 
 function clang_scope_isPrivateVariable(var)
-    @ccall libCppInterOpExtra.clang_scope_isPrivateVariable(var::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isPrivateVariable(var::CXScope)::Bool
 end
 
 function clang_scope_isStaticVariable(var)
-    @ccall libCppInterOpExtra.clang_scope_isStaticVariable(var::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isStaticVariable(var::CXScope)::Bool
 end
 
 function clang_scope_isConstVariable(var)
-    @ccall libCppInterOpExtra.clang_scope_isConstVariable(var::CXScope)::Bool
+    @ccall libCppInterOp.clang_scope_isConstVariable(var::CXScope)::Bool
 end
 
 const CXObject = Ptr{Cvoid}
 
 function clang_allocate(S)
-    @ccall libCppInterOpExtra.clang_allocate(S::CXScope)::CXObject
+    @ccall libCppInterOp.clang_allocate(S::CXScope)::CXObject
 end
 
 function clang_deallocate(address)
-    @ccall libCppInterOpExtra.clang_deallocate(address::CXObject)::Cvoid
+    @ccall libCppInterOp.clang_deallocate(address::CXObject)::Cvoid
 end
 
 function clang_construct(scope, arena)
-    @ccall libCppInterOpExtra.clang_construct(scope::CXScope, arena::Ptr{Cvoid})::CXObject
+    @ccall libCppInterOp.clang_construct(scope::CXScope, arena::Ptr{Cvoid})::CXObject
 end
 
 function clang_destruct(This, S, withFree)
-    @ccall libCppInterOpExtra.clang_destruct(This::CXObject, S::CXScope, withFree::Bool)::Cvoid
+    @ccall libCppInterOp.clang_destruct(This::CXObject, S::CXScope, withFree::Bool)::Cvoid
 end
 
 mutable struct CXJitCallImpl end
@@ -495,7 +495,7 @@ mutable struct CXJitCallImpl end
 const CXJitCall = Ptr{CXJitCallImpl}
 
 function clang_jitcall_dispose(J)
-    @ccall libCppInterOpExtra.clang_jitcall_dispose(J::CXJitCall)::Cvoid
+    @ccall libCppInterOp.clang_jitcall_dispose(J::CXJitCall)::Cvoid
 end
 
 @enum CXJitCallKind::UInt32 begin
@@ -505,11 +505,11 @@ end
 end
 
 function clang_jitcall_getKind(J)
-    @ccall libCppInterOpExtra.clang_jitcall_getKind(J::CXJitCall)::CXJitCallKind
+    @ccall libCppInterOp.clang_jitcall_getKind(J::CXJitCall)::CXJitCallKind
 end
 
 function clang_jitcall_isValid(J)
-    @ccall libCppInterOpExtra.clang_jitcall_isValid(J::CXJitCall)::Bool
+    @ccall libCppInterOp.clang_jitcall_isValid(J::CXJitCall)::Bool
 end
 
 struct CXJitCallArgList
@@ -518,11 +518,11 @@ struct CXJitCallArgList
 end
 
 function clang_jitcall_invoke(J, result, args, self)
-    @ccall libCppInterOpExtra.clang_jitcall_invoke(J::CXJitCall, result::Ptr{Cvoid}, args::CXJitCallArgList, self::Ptr{Cvoid})::Cvoid
+    @ccall libCppInterOp.clang_jitcall_invoke(J::CXJitCall, result::Ptr{Cvoid}, args::CXJitCallArgList, self::Ptr{Cvoid})::Cvoid
 end
 
 function clang_jitcall_makeFunctionCallable(func)
-    @ccall libCppInterOpExtra.clang_jitcall_makeFunctionCallable(func::CXScope)::CXJitCall
+    @ccall libCppInterOp.clang_jitcall_makeFunctionCallable(func::CXScope)::CXJitCall
 end
 
 # exports

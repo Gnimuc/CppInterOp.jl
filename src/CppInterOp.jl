@@ -29,12 +29,18 @@ using .LibCppInterOp
 include("platform/JLLEnvs.jl")
 using .JLLEnvs
 
-include("interpreter.jl")
-export create_interpreter, get_current_interpreter
-
+# internal
 include("utilities.jl")
-include("version.jl")
-include("core.jl")
-include("api.jl")
+include("core/core.jl")
+include("api/api.jl")
+# include("version.jl")
+
+# public API
+include("env.jl")
+export get_compiler_flags
+
+include("interpreter.jl")
+export create_interpreter
+
 
 end
