@@ -32,6 +32,6 @@ void clang_value_setOpaqueType(CXValue V, void *Ty) {
 
 void *clang_value_getPtr(CXValue V) { return static_cast<clang::Value *>(V)->getPtr(); }
 
-void clang_value_setPtr(CXValue V, void *Ptr) {
-  static_cast<clang::Value *>(V)->setPtr(Ptr);
+void clang_value_setPtr(CXValue V, void *P) {
+  static_cast<clang::Value *>(V)->setPtr(P);
 }

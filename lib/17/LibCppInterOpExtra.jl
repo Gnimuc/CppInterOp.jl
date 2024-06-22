@@ -1,7 +1,7 @@
 module LibCppInterOpExtra
 
 using ..CppInterOp: libCppInterOp, libCppInterOpExtra
-using ..CppInterOp: CXErrorCode, CXTypeKind, CXString, CXStringSet
+using ..CppInterOp: CXErrorCode, CXTypeKind, CXString, CXStringSet, CXValue
 
 const intptr_t = Clong
 
@@ -569,8 +569,8 @@ function clang_value_getPtr(V)
     @ccall libCppInterOpExtra.clang_value_getPtr(V::CXValue)::Ptr{Cvoid}
 end
 
-function clang_value_setPtr(V, Ptr)
-    @ccall libCppInterOpExtra.clang_value_setPtr(V::CXValue, Ptr::Ptr{Cvoid})::Cvoid
+function clang_value_setPtr(V, P)
+    @ccall libCppInterOpExtra.clang_value_setPtr(V::CXValue, P::Ptr{Cvoid})::Cvoid
 end
 
 # exports

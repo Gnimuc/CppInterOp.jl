@@ -26,7 +26,9 @@ using Test
     @test Cpp.process(I, "jl_init()") == true
 
     v = Cpp.createValue()
-    @test Cpp.evaluate(I, "int a = 42;", v)
+    @test Cpp.evaluate(I, "jl_cpu_threads()", v)
+    @test Cpp.isManuallyAlloc(v) == false
+    @test Cpp.getKind(v) == Cpp.CXValue_Int
     Cpp.dispose(v)
 
     Cpp.dispose(I)

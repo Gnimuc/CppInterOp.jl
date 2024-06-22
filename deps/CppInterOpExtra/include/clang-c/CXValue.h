@@ -44,7 +44,7 @@ void clang_value_setOpaqueType(CXValue V, void *Ty);
 
 void *clang_value_getPtr(CXValue V);
 
-void clang_value_setPtr(CXValue V, void *Ptr);
+void clang_value_setPtr(CXValue V, void *P);
 
 LLVM_CLANG_C_EXTERN_C_END
 
