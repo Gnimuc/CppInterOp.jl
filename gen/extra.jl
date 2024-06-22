@@ -3,7 +3,7 @@ using Clang.Clang_jll
 
 @add_def intptr_t
 
-options = load_options(joinpath(@__DIR__, "generator.toml"))
+options = load_options(joinpath(@__DIR__, "extra.toml"))
 
 import Pkg
 import BinaryBuilderBase:

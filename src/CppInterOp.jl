@@ -23,6 +23,9 @@ include(joinpath(libdir, "LibClang.jl"))
 
 const llvm_version = string(Base.libllvm_version.major)
 
+include(joinpath(libdir, llvm_version, "LibCppInterOpExtra.jl"))
+using .LibCppInterOpExtra
+
 include(joinpath(libdir, llvm_version, "LibCppInterOp.jl"))
 using .LibCppInterOp
 
@@ -33,7 +36,10 @@ using .JLLEnvs
 include("utilities.jl")
 include("core/core.jl")
 include("api/api.jl")
-# include("version.jl")
+# deprecated
+include("extra.jl")
+
+include("version.jl")
 
 # public API
 include("env.jl")

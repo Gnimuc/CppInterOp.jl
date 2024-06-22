@@ -9,10 +9,10 @@ Create a C/C++ interpreter.
 """
 function create_interpreter(args=String[]; is_cxx=true, version=JLLEnvs.GCC_MIN_VER)
     default_args = get_compiler_flags(; is_cxx, version)
-    is_cxx && push!(args, "-xc++")
+    is_cxx && push!(default_args, "-xc++")
     clang_bin = joinpath(Clang_jll.artifact_dir, "bin", "clang")
-    pushfirst!(args, clang_bin)  # Argv0
-    return createInterpreter(args)
+    pushfirst!(default_args, clang_bin)  # Argv0
+    return createInterpreter([default_args..., args...])
 end
 
 """

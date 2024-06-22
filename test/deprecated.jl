@@ -2,6 +2,13 @@ import CppInterOp as Cpp
 using Test
 
 @testset "InterpreterTest" begin
+    llvm_assertions = try
+        cglobal((:_ZN4llvm24DisableABIBreakingChecksE, Base.libllvm_path()), Cvoid)
+        false
+    catch
+        true
+    end
+if !llvm_assertions
     @testset "DebugFlag" begin
         Cpp.CreateInterpreter()
         @test Cpp.IsDebugOutputEnabled() == false
@@ -15,6 +22,7 @@ using Test
         @test Cpp.IsDebugOutputEnabled() == false
         @test_nowarn Cpp.Process("int c = 12;")
     end
+end
 
     @testset "Evaluate" begin
         Cpp.CreateInterpreter()
