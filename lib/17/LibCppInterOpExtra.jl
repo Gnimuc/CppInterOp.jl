@@ -520,6 +520,59 @@ function clang_CppInterOp_EndStdStreamCapture()
     @ccall libCppInterOpExtra.clang_CppInterOp_EndStdStreamCapture()::CXString
 end
 
+function clang_createValueFromType(I, Ty)
+    @ccall libCppInterOpExtra.clang_createValueFromType(I::Ptr{Cvoid}, Ty::Ptr{Cvoid})::CXValue
+end
+
+function clang_value_getType(V)
+    @ccall libCppInterOpExtra.clang_value_getType(V::CXValue)::Ptr{Cvoid}
+end
+
+function clang_value_isManuallyAlloc(V)
+    @ccall libCppInterOpExtra.clang_value_isManuallyAlloc(V::CXValue)::Bool
+end
+
+@enum CXValueKind::UInt32 begin
+    CXValue_Bool = 0
+    CXValue_Char_S = 1
+    CXValue_SChar = 2
+    CXValue_UChar = 3
+    CXValue_Short = 4
+    CXValue_UShort = 5
+    CXValue_Int = 6
+    CXValue_UInt = 7
+    CXValue_Long = 8
+    CXValue_ULong = 9
+    CXValue_LongLong = 10
+    CXValue_ULongLong = 11
+    CXValue_Float = 12
+    CXValue_Double = 13
+    CXValue_LongDouble = 14
+    CXValue_Void = 15
+    CXValue_PtrOrObj = 16
+    CXValue_Unspecified = 17
+end
+
+function clang_value_getKind(V)
+    @ccall libCppInterOpExtra.clang_value_getKind(V::CXValue)::CXValueKind
+end
+
+function clang_value_setKind(V, K)
+    @ccall libCppInterOpExtra.clang_value_setKind(V::CXValue, K::CXValueKind)::Cvoid
+end
+
+function clang_value_setOpaqueType(V, Ty)
+    @ccall libCppInterOpExtra.clang_value_setOpaqueType(V::CXValue, Ty::Ptr{Cvoid})::Cvoid
+end
+
+function clang_value_getPtr(V)
+    @ccall libCppInterOpExtra.clang_value_getPtr(V::CXValue)::Ptr{Cvoid}
+end
+
+function clang_value_setPtr(V, Ptr)
+    @ccall libCppInterOpExtra.clang_value_setPtr(V::CXValue, Ptr::Ptr{Cvoid})::Cvoid
+end
+
 # exports
 const PREFIXES = ["clang", "CX"]
 for name in names(@__MODULE__; all=true), prefix in PREFIXES

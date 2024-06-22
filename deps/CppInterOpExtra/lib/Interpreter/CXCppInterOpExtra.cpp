@@ -1,4 +1,4 @@
-#include "clang-c/CXCppInterOp.h"
+#include "clang-c/CXCppInterOpExtra.h"
 #include "clang-c/CXString.h"
 #include "clang/Interpreter/CppInterOp.h"
 #include <cstring>
