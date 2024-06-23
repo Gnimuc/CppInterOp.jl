@@ -12,7 +12,6 @@ using Test
         end
         flush(io)
         s = read(path, String)
-        @error s
         @test isempty(s)
     end
 

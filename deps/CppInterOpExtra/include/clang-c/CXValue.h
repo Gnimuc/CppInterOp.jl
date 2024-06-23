@@ -13,6 +13,12 @@ CXValue clang_createValueFromType(void *I, void *Ty);
 
 void *clang_value_getType(CXValue V);
 
+bool clang_value_isValid(CXValue V);
+
+bool clang_value_isVoid(CXValue V);
+
+bool clang_value_hasValue(CXValue V);
+
 bool clang_value_isManuallyAlloc(CXValue V);
 
 typedef enum {
@@ -45,6 +51,29 @@ void clang_value_setOpaqueType(CXValue V, void *Ty);
 void *clang_value_getPtr(CXValue V);
 
 void clang_value_setPtr(CXValue V, void *P);
+
+#define REPL_BUILTIN_TYPES                                                                 \
+  X(bool, Bool)                                                                            \
+  X(char, Char_S)                                                                          \
+  X(signed char, SChar)                                                                    \
+  X(unsigned char, UChar)                                                                  \
+  X(short, Short)                                                                          \
+  X(unsigned short, UShort)                                                                \
+  X(int, Int)                                                                              \
+  X(unsigned int, UInt)                                                                    \
+  X(long, Long)                                                                            \
+  X(unsigned long, ULong)                                                                  \
+  X(long long, LongLong)                                                                   \
+  X(unsigned long long, ULongLong)                                                         \
+  X(float, Float)                                                                          \
+  X(double, Double)                                                                        \
+  X(long double, LongDouble)
+
+#define X(type, name)                                                                      \
+  void clang_value_set##name(CXValue V, type Val);                                         \
+  type clang_value_get##name(CXValue V);
+REPL_BUILTIN_TYPES
+#undef X
 
 LLVM_CLANG_C_EXTERN_C_END
 

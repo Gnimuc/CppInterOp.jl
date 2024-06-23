@@ -6,3 +6,4 @@ include("deprecated.jl")
 include("env.jl")
 
 include("core/interpreter.jl")
+include("core/value.jl")

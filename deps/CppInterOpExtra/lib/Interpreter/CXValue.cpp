@@ -14,6 +14,12 @@ void *clang_value_getType(CXValue V) {
   return static_cast<clang::Value *>(V)->getType().getAsOpaquePtr();
 }
 
+bool clang_value_isValid(CXValue V) { return static_cast<clang::Value *>(V)->isValid(); }
+
+bool clang_value_isVoid(CXValue V) { return static_cast<clang::Value *>(V)->isVoid(); }
+
+bool clang_value_hasValue(CXValue V) { return static_cast<clang::Value *>(V)->hasValue(); }
+
 bool clang_value_isManuallyAlloc(CXValue V) {
   return static_cast<clang::Value *>(V)->isManuallyAlloc();
 }
@@ -32,6 +38,14 @@ void clang_value_setOpaqueType(CXValue V, void *Ty) {
 
 void *clang_value_getPtr(CXValue V) { return static_cast<clang::Value *>(V)->getPtr(); }
 
-void clang_value_setPtr(CXValue V, void *P) {
-  static_cast<clang::Value *>(V)->setPtr(P);
-}
+void clang_value_setPtr(CXValue V, void *P) { static_cast<clang::Value *>(V)->setPtr(P); }
+
+#define X(type, name)                                                                      \
+  void clang_value_set##name(CXValue V, type Val) {                                        \
+    static_cast<clang::Value *>(V)->set##name(Val);                                        \
+  }                                                                                        \
+  type clang_value_get##name(CXValue V) {                                                  \
+    return static_cast<clang::Value *>(V)->get##name();                                    \
+  }
+REPL_BUILTIN_TYPES
+#undef X
