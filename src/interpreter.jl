@@ -16,7 +16,7 @@ function create_interpreter(args=String[]; is_cxx=true, version=JLLEnvs.GCC_MIN_
 end
 
 """
-    evaluate(x::AbstractInterpreter, code::AbstractString) -> Value
+    evaluate(x::AbstractInterpreter, code::AbstractString)
 Evaluate a code snippet and return the result.
 
 # Arguments
@@ -24,12 +24,21 @@ Evaluate a code snippet and return the result.
 - `code::AbstractString`: The code snippet to evaluate.
 """
 function evaluate(x::AbstractInterpreter, code::AbstractString)
-    @check_ptrs x
     v = createValue()
     res = clang_interpreter_evaluate(x, code, v)
-    if res != CXEval_Success
+    if res == CXError_Success
+        ret = get_value(CppValue(v))
         dispose(v)
-        error("Failed to evaluate code snippet.")
+        return ret
     end
-    return v
+    @error "Failed to evaluate code snippet."
+    dispose(v)
+    return nothing
 end
+
+"""
+    undo(x::AbstractInterpreter, n::Integer=1)
+Undo the last `n` steps.
+"""
+undo(x::AbstractInterpreter, n::Integer=1) = Undo(x, n) == CXError_Success
+

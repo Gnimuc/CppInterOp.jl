@@ -45,8 +45,11 @@ include("version.jl")
 include("env.jl")
 export get_compiler_flags
 
-include("interpreter.jl")
-export create_interpreter
+include("types.jl")
+export cppconvert
 
+include("interpreter.jl")
+export create_interpreter, dispose
+export declare, process, evaluate, undo
 
 end

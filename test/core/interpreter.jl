@@ -1,7 +1,7 @@
 import CppInterOp as Cpp
 using Test
 
-@testset "Interpreter" begin
+@testset "Interpreter Core" begin
     args = Cpp.get_compiler_flags()
     clang_bin = joinpath(Cpp.Clang_jll.artifact_dir, "bin", "clang")
     pushfirst!(args, clang_bin)

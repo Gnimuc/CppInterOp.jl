@@ -1,7 +1,7 @@
 import CppInterOp as Cpp
 using Test
 
-@testset "Value" begin
+@testset "Value Core" begin
     I = Cpp.create_interpreter()
     @test I.ptr != C_NULL
 
@@ -22,4 +22,30 @@ using Test
     @test Cpp.getKind(v) == Cpp.CXValue_Int
     @test Cpp.getInt(v) == @ccall jl_cpu_threads()::Cint
     Cpp.dispose(v)
+end
+
+@testset "Value Core | Decay" begin
+    I = Cpp.create_interpreter()
+    @test I.ptr != C_NULL
+
+    Cpp.declare(I, "#include <vector>")
+    Cpp.process(I, "std::vector<int> x = {1, 2, 3};")
+
+    v_x = Cpp.createValue()
+    @test Cpp.evaluate(I, "x", v_x)
+    @test Cpp.hasValue(v_x) == true
+    @test Cpp.isManuallyAlloc(v_x) == false
+    @test Cpp.getKind(v_x) == Cpp.CXValue_PtrOrObj
+
+    v_xptr = Cpp.createValue()
+    @test Cpp.evaluate(I, "&x", v_xptr)
+    @test Cpp.hasValue(v_xptr) == true
+    @test Cpp.isManuallyAlloc(v_xptr) == false
+    @test Cpp.getKind(v_xptr) == Cpp.CXValue_PtrOrObj
+
+    # objects "decay" into pointers
+    @test Cpp.getPtr(v_x) == Cpp.getPtr(v_xptr)
+
+    Cpp.dispose(v_x)
+    Cpp.dispose(v_xptr)
 end

@@ -61,6 +61,15 @@ function clang_interpreter_takeInterpreterAsPtr(I)
 end
 
 """
+    clang_interpreter_Undo(I, N)
+
+Undo N previous incremental inputs.
+"""
+function clang_interpreter_Undo(I, N)
+    @ccall libCppInterOp.clang_interpreter_Undo(I::CXInterpreter, N::Cuint)::CXErrorCode
+end
+
+"""
     clang_interpreter_dispose(I)
 
 Dispose of the given interpreter context.
@@ -153,7 +162,6 @@ An opaque pointer representing a lightweight struct that is used for carrying ex
 """
 const CXValue = Ptr{Cvoid}
 
-# no prototype is found for this function at CXCppInterOp.h:147:9, please use with caution
 """
     clang_createValue()
 

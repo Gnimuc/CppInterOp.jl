@@ -147,3 +147,12 @@ function searchLibrariesForSymbol(x::AbstractInterpreter, symbol::AbstractString
     cxstr = clang_interpreter_searchLibrariesForSymbol(x, symbol, search_system)
     return get_string(cxstr)
 end
+
+"""
+    Undo(x::AbstractInterpreter, n::Integer) -> Bool
+Undo `n`` previous incremental inputs.
+"""
+function Undo(x::AbstractInterpreter, n::Integer)
+    @check_ptrs x
+    clang_interpreter_Undo(x, n)
+end
