@@ -1,13 +1,7 @@
 """
-    abstract type AbstractQualType <: Any
-Supertype for `QualType`s.
+    struct QualType <: AbstractType
 """
-abstract type AbstractQualType end
-
-"""
-    struct QualType <: AbstractQualType
-"""
-struct QualType <: AbstractQualType
+struct QualType <: AbstractType
     ptr::CXQualType
 end
 
