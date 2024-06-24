@@ -42,3 +42,5 @@ Undo the last `n` steps.
 """
 undo(x::AbstractInterpreter, n::Integer=1) = Undo(x, n) == CXError_Success
 
+
+lookup_func(x::AbstractInterpreter, name::AbstractString) = getFunctionAddressFromMangledName(x, name)

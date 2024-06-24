@@ -156,3 +156,12 @@ function Undo(x::AbstractInterpreter, n::Integer)
     @check_ptrs x
     clang_interpreter_Undo(x, n)
 end
+
+"""
+    getFunctionAddressFromMangledName(x::AbstractInterpreter, name::AbstractString) -> Ptr{Cvoid}
+Find the address of a function by searching its mangled name.
+"""
+function getFunctionAddressFromMangledName(x::AbstractInterpreter, name::AbstractString)
+    @check_ptrs x
+    return clang_interpreter_getFunctionAddressFromMangledName(x, name)
+end

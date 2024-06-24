@@ -51,5 +51,6 @@ export cppconvert
 include("interpreter.jl")
 export create_interpreter, dispose
 export declare, process, evaluate, undo
+export lookup_func
 
 end
