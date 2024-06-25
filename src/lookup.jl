@@ -4,6 +4,7 @@
 function lookup(name::AbstractString, parent::AbstractScope)
     s = parent
     for n in eachsplit(name, "::")
+        isempty(n) && continue
         s = getScope(string(n), s)
     end
     return s
@@ -19,9 +20,11 @@ function lookup(x::AbstractInterpreter, name::AbstractString)
 end
 
 """
-    lookup_sugar(name::AbstractString, parent::AbstractScope) -> Scope
+    name(x::AbstractScope) -> String
 """
-function lookup_sugar(name::AbstractString, parent::AbstractScope)
-    @check_ptrs parent
-    return getNamed(name, parent)
-end
+name(x::AbstractScope) = getName(x)
+
+"""
+    fullname(x::AbstractScope) -> String
+"""
+fullname(x::AbstractScope) = getQualifiedName(x)

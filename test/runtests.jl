@@ -10,3 +10,4 @@ include("core/value.jl")
 
 include("interpreter.jl")
 include("lookup.jl")
+include("types.jl")

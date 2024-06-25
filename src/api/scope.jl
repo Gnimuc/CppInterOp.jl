@@ -12,7 +12,7 @@ end
 Return the namespace or class (by stripping typedefs).
 """
 function getScope(name::AbstractString, parent::AbstractScope)
-    @assert is_valid(parent) "Invalid scope: $x"
+    @assert isvalid(parent) "Invalid scope: $x"
     return Scope(clang_scope_getScope(name, parent))
 end
 
@@ -20,7 +20,7 @@ end
     getNamed(name::AbstractString, parent::AbstractScope) -> Scope
 """
 function getNamed(name::AbstractString, parent::AbstractScope)
-    @assert is_valid(parent) "Invalid scope: $x"
+    @assert isvalid(parent) "Invalid scope: $x"
     return Scope(clang_scope_getNamed(name, parent))
 end
 
@@ -29,7 +29,7 @@ end
 Return the name.
 """
 function getName(x::AbstractScope)
-    @assert is_valid(x) "Invalid scope: $x"
+    @assert isvalid(x) "Invalid scope: $x"
     return get_string(clang_scope_getName(x))
 end
 
@@ -38,14 +38,34 @@ end
 Return the qualified name.
 """
 function getQualifiedName(x::AbstractScope)
-    @assert is_valid(x) "Invalid scope: $x"
+    @assert isvalid(x) "Invalid scope: $x"
     return get_string(clang_scope_getQualifiedName(x))
 end
 
-# helper functions
-is_valid(x::AbstractScope) = x.ptr.kind != CXScope_Invalid
+"""
+    getSizeOf(x::AbstractScope) -> Int
+Return the size of the scope.
+"""
+function getSizeOf(x::AbstractScope)
+    @assert isvalid(x) "Invalid scope: $x"
+    return clang_scope_getSizeOf(x)
+end
+
+"""
+    getType(x::AbstractScope) -> QualType
+Return the type from the scope.
+"""
+function getType(x::AbstractScope)
+    @assert isvalid(x) "Invalid scope: $x"
+    return QualType(clang_scope_getTypeFromScope(x))
+end
 
 function dump(x::AbstractScope)
-    @assert is_valid(x) "Invalid scope: $x"
+    @assert isvalid(x) "Invalid scope: $x"
     clang_scope_dump(x)
 end
+
+
+
+# helper functions
+isvalid(x::AbstractScope) = x.ptr.kind != CXScope_Invalid
