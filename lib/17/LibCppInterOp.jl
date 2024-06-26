@@ -429,14 +429,20 @@ end
 Describes the kind of entity that a scope refers to.
 """
 @enum CXScopeKind::UInt32 begin
-    CXScope_Unexposed = 0
-    CXScope_Invalid = 1
-    CXScope_Global = 2
-    CXScope_Namespace = 3
-    CXScope_Function = 4
-    CXScope_Variable = 5
-    CXScope_EnumConstant = 6
-    CXScope_Field = 7
+    CXScope_Unexposed = 1
+    CXScope_Enum = 5
+    CXScope_Field = 6
+    CXScope_EnumConstant = 7
+    CXScope_Function = 8
+    CXCursor_Var = 9
+    CXScope_Typedef = 20
+    CXScope_Namespace = 22
+    CXScope_ClassTemplate = 31
+    CXScope_TypeAlias = 36
+    CXScope_Invalid = 70
+    CXScope_TranslationUnit = 350
+    CXScope_Record = 999
+    CXScope_CXXRecord = 1000
 end
 
 """
@@ -1146,7 +1152,6 @@ end
 Calls the destructor of object of type `type`. When withFree is true it calls operator delete/free.
 
 # Arguments
-* `I`: The interpreter.
 * `This`: The object to destruct.
 * `type`: The type of the object.
 * `withFree`: Whether to call operator delete/free or not.
@@ -1161,6 +1166,18 @@ mutable struct CXJitCallImpl end
 An opaque pointer representing CppInterOp's JitCall, a class modeling function calls for functions produced by the interpreter in compiled code.
 """
 const CXJitCall = Ptr{CXJitCallImpl}
+
+"""
+    clang_jitcall_create(func)
+
+Creates a trampoline function by using the interpreter and returns a uniform interface to call it from compiled code.
+
+# Returns
+a [`CXJitCall`](@ref).
+"""
+function clang_jitcall_create(func)
+    @ccall libCppInterOp.clang_jitcall_create(func::CXScope)::CXJitCall
+end
 
 """
     clang_jitcall_dispose(J)
@@ -1213,36 +1230,20 @@ function clang_jitcall_isValid(J)
     @ccall libCppInterOp.clang_jitcall_isValid(J::CXJitCall)::Bool
 end
 
-struct CXJitCallArgList
-    data::Ptr{Ptr{Cvoid}}
-    numArgs::Csize_t
-end
-
 """
-    clang_jitcall_invoke(J, result, args, self)
+    clang_jitcall_invoke(J, result, args, n, self)
 
 Makes a call to a generic function or method.
 
 # Arguments
-* `J`:\\[in\\] The [`CXJitCall`](@ref).
-* `result`:\\[in\\] The location where the return result will be placed.
-* `args`:\\[in\\] The arguments to pass to the invocation.
-* `self`:\\[in\\] The 'this pointer' of the object.
+* `J`: The [`CXJitCall`](@ref).
+* `result`: The location where the return result will be placed.
+* `args`: The arguments to pass to the invocation.
+* `n`: The number of arguments.
+* `self`: The 'this pointer' of the object.
 """
-function clang_jitcall_invoke(J, result, args, self)
-    @ccall libCppInterOp.clang_jitcall_invoke(J::CXJitCall, result::Ptr{Cvoid}, args::CXJitCallArgList, self::Ptr{Cvoid})::Cvoid
-end
-
-"""
-    clang_jitcall_makeFunctionCallable(func)
-
-Creates a trampoline function by using the interpreter and returns a uniform interface to call it from compiled code.
-
-# Returns
-a [`CXJitCall`](@ref).
-"""
-function clang_jitcall_makeFunctionCallable(func)
-    @ccall libCppInterOp.clang_jitcall_makeFunctionCallable(func::CXScope)::CXJitCall
+function clang_jitcall_invoke(J, result, args, n, self)
+    @ccall libCppInterOp.clang_jitcall_invoke(J::CXJitCall, result::Ptr{Cvoid}, args::Ptr{Ptr{Cvoid}}, n::Cuint, self::Ptr{Cvoid})::Cvoid
 end
 
 # exports

@@ -22,7 +22,14 @@ using Test
         @test FooTyDef != get_scope(get_type(FooTyDef))
         @test Foo == get_scope(get_type(FooTyDef))
 
-        # test build-in types
+        dispose(I)
+    end
+
+    @testset "sizeof" begin
+        I = create_interpreter()
+        @test I.ptr != C_NULL
+
+        # build-in types
         int = get_type(I, "int")
         @test isvalid(BuiltinCint)
         @test Cpp.sizeof(int) == sizeof(Cint)
