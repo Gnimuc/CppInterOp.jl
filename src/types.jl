@@ -50,8 +50,6 @@ get_type(x::AbstractScope) = getType(x)
 
 get_scope(x::AbstractType) = getScopeFromType(x)
 
-function cppconvert end
-
 sizeof(x::AbstractType) = getSizeOfType(x)
 sizeof(x::AbstractScope) = getSizeOf(x)
 

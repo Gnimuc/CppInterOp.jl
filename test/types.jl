@@ -31,7 +31,7 @@ using Test
 
         # build-in types
         int = get_type(I, "int")
-        @test isvalid(BuiltinCint)
+        @test isvalid(int)
         @test Cpp.sizeof(int) == sizeof(Cint)
 
         dispose(I)

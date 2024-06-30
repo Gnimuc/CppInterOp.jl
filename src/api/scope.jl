@@ -65,6 +65,10 @@ function dump(x::AbstractScope)
     clang_scope_dump(x)
 end
 
+function getFunctionReturnType(x::AbstractScope)
+    @assert isvalid(x) "Invalid scope: $x"
+    return QualType(clang_scope_getFunctionReturnType(x))
+end
 
 
 # helper functions

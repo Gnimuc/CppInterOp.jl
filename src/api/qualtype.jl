@@ -25,5 +25,14 @@ function getSizeOfType(x::AbstractType)
     return clang_qualtype_getSizeOfType(x)
 end
 
+"""
+    isBuiltin(x::AbstractType) -> Bool
+Return true if the type is a "built-in" or a "complex" type.
+"""
+function isBuiltin(x::AbstractType)
+    @assert isvalid(x) "Invalid type: $x"
+    return clang_qualtype_isBuiltin(x)
+end
+
 # helper functions
 isvalid(x::AbstractType) = x.ptr.kind != CXType_Invalid

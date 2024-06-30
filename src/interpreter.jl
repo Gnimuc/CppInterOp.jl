@@ -46,6 +46,6 @@ lookup_func(x::AbstractInterpreter, name::AbstractString) = getFunctionAddressFr
 
 macro include(I, path)
     quote
-        addIncludePath($(esc(I)), $path)
+        addIncludePath($(esc(I)), $(esc(path)))
     end
 end
