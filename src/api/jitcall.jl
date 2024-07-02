@@ -3,13 +3,13 @@
 Create a trampoline function for calling the C/C++ function/method.
 """
 function create_cppcall(x::AbstractScope)
-    @assert isvalid(x) "Invalid function scope: $x"
+    @assert is_valid(x) "Invalid function scope: $x"
     return JitCall(clang_jitcall_create(x))
 end
 
 dispose(x::AbstractJitCall) = clang_jitcall_dispose(x)
 
-function isvalid(x::AbstractJitCall)
+function is_valid(x::AbstractJitCall)
     @check_ptrs x
     return clang_jitcall_isValid(x)
 end

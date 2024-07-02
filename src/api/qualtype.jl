@@ -12,7 +12,7 @@ end
 Return the scope from the type.
 """
 function getScopeFromType(x::AbstractType)
-    @assert isvalid(x) "Invalid type: $x"
+    @assert is_valid(x) "Invalid type: $x"
     return Scope(clang_scope_getScopeFromType(x))
 end
 
@@ -21,7 +21,7 @@ end
 Return the size of the type.
 """
 function getSizeOfType(x::AbstractType)
-    @assert isvalid(x) "Invalid type: $x"
+    @assert is_valid(x) "Invalid type: $x"
     return clang_qualtype_getSizeOfType(x)
 end
 
@@ -30,9 +30,9 @@ end
 Return true if the type is a "built-in" or a "complex" type.
 """
 function isBuiltin(x::AbstractType)
-    @assert isvalid(x) "Invalid type: $x"
+    @assert is_valid(x) "Invalid type: $x"
     return clang_qualtype_isBuiltin(x)
 end
 
 # helper functions
-isvalid(x::AbstractType) = x.ptr.kind != CXType_Invalid
+is_valid(x::AbstractType) = x.ptr.kind != CXType_Invalid

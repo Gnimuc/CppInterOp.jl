@@ -8,7 +8,7 @@ using Test
     Cpp.declare(I, """#include <ctime>""")
 
     x = Cpp.lookup(I, "clock")
-    @test Cpp.isvalid(x) == true
+    @test Cpp.is_valid(x) == true
     @test Cpp.name(x) == "clock"
     @test Cpp.fullname(x) == "clock"
 

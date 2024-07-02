@@ -43,18 +43,18 @@ function clang_createInterpreterFromPtr(I)
 end
 
 """
-    clang_interpreter_getInterpreterAsPtr(I)
+    clang_interpreter_getUnderlyingInterpreter(I)
 
-Returns a [`TInterp_t`](@ref).
+Returns a pointer to the underlying interpreter.
 """
-function clang_interpreter_getInterpreterAsPtr(I)
-    @ccall libCppInterOp.clang_interpreter_getInterpreterAsPtr(I::CXInterpreter)::TInterp_t
+function clang_interpreter_getUnderlyingInterpreter(I)
+    @ccall libCppInterOp.clang_interpreter_getUnderlyingInterpreter(I::CXInterpreter)::Ptr{Cvoid}
 end
 
 """
     clang_interpreter_takeInterpreterAsPtr(I)
 
-Similar to [`clang_interpreter_getInterpreterAsPtr`](@ref)() but it takes the ownership.
+Returns a [`TInterp_t`](@ref) and takes the ownership.
 """
 function clang_interpreter_takeInterpreterAsPtr(I)
     @ccall libCppInterOp.clang_interpreter_takeInterpreterAsPtr(I::CXInterpreter)::TInterp_t

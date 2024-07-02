@@ -10,7 +10,7 @@ using Test
     declare(I, """#include "scope.h" """)
 
     x = lookup(I, "outer::inner::FooC")
-    @test CppInterOp.isvalid(x) == true
+    @test CppInterOp.is_valid(x) == true
     @test CppInterOp.name(x) == "FooC"
     @test CppInterOp.fullname(x) == "outer::inner::FooC"
 
