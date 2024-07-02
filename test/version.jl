@@ -1,9 +1,8 @@
-using CppInterOp
-using CppInterOp: GetVersion, llvm_version
+import CppInterOp as Cpp
 using Test
 
 @testset "Sanity Check" begin
-    ver = GetVersion()
+    ver = Cpp.GetVersion()
     @info "CppInterOp version: $ver"
-    @test occursin(llvm_version, ver)
+    @test occursin(Cpp.llvm_version, ver)
 end

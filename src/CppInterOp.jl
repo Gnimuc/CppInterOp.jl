@@ -26,15 +26,33 @@ const llvm_version = string(Base.libllvm_version.major)
 include(joinpath(libdir, llvm_version, "LibCppInterOp.jl"))
 using .LibCppInterOp
 
+include(joinpath(libdir, llvm_version, "LibCppInterOpExtra.jl"))
+using .LibCppInterOpExtra
+
 include("platform/JLLEnvs.jl")
 using .JLLEnvs
 
-include("interpreter.jl")
-export create_interpreter, get_current_interpreter
-
+# internal
 include("utilities.jl")
+include("core/core.jl")
+include("api/api.jl")
+# deprecated
+include("extra.jl")
+
 include("version.jl")
-include("core.jl")
-include("api.jl")
+
+# public API
+include("env.jl")
+export get_compiler_flags
+
+include("types.jl")
+
+include("interpreter.jl")
+export create_interpreter, dispose
+export declare, process, evaluate, undo, @include
+export lookup_func
+
+include("lookup.jl")
+export lookup
 
 end

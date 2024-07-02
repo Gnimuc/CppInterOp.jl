@@ -4,7 +4,7 @@ using libCppInterOp_jll
 
 @add_def intptr_t
 
-options = load_options(joinpath(@__DIR__, "option.toml"))
+options = load_options(joinpath(@__DIR__, "extra.toml"))
 
 import Pkg
 import BinaryBuilderBase:
@@ -35,10 +35,11 @@ cd(@__DIR__) do
                 options["general"]["output_file_path"] = output_file_path
 
                 libclang_include_dir = joinpath(Clang_jll.artifact_dir, "include")
-                # include_dir = joinpath(libCppInterOp_jll.artifact_dir, "include")
+                include_dir = joinpath(@__DIR__, "..", "deps", "CppInterOpExtra", "include")
                 header_dir = joinpath(include_dir, "clang-c")
                 args = Generators.get_default_args()
                 push!(args, "-isystem$libclang_include_dir")
+                push!(args, "-isystem$libCppInterOp_include_dir")
                 push!(args, "-I$include_dir")
 
                 headers = [joinpath(header_dir, x) for x in readdir(header_dir) if endswith(x, ".h")]
