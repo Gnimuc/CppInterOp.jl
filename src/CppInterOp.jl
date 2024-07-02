@@ -46,7 +46,6 @@ include("env.jl")
 export get_compiler_flags
 
 include("types.jl")
-export cppconvert
 
 include("interpreter.jl")
 export create_interpreter, dispose

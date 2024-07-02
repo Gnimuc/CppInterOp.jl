@@ -14,13 +14,13 @@ using Test
 
         Foo = lookup(I, "Foo")
         @test isvalid(Foo)
-        @test Foo == get_scope(get_type(Foo))
+        @test Cpp.is_equal(Foo, get_scope(get_type(Foo)))
 
         FooTyDef = lookup(I, "FooTyDef")
         @test isvalid(FooTyDef)
         # typedefs is desugared to the actual type
-        @test FooTyDef != get_scope(get_type(FooTyDef))
-        @test Foo == get_scope(get_type(FooTyDef))
+        @test !Cpp.is_equal(FooTyDef, get_scope(get_type(FooTyDef)))
+        @test Cpp.is_equal(Foo, get_scope(get_type(FooTyDef)))
 
         dispose(I)
     end

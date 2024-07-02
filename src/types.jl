@@ -52,4 +52,3 @@ get_scope(x::AbstractType) = getScopeFromType(x)
 
 sizeof(x::AbstractType) = getSizeOfType(x)
 sizeof(x::AbstractScope) = getSizeOf(x)
-

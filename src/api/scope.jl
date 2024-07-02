@@ -72,4 +72,4 @@ end
 
 
 # helper functions
-isvalid(x::AbstractScope) = x.ptr.kind != CXScope_Invalid
+isvalid(x::AbstractScope) = x.scope.kind != CXScope_Invalid

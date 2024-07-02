@@ -28,3 +28,6 @@ name(x::AbstractScope) = getName(x)
     fullname(x::AbstractScope) -> String
 """
 fullname(x::AbstractScope) = getQualifiedName(x)
+
+is_equal(x::CXScope, y::CXScope) = x.data == y.data
+is_equal(x::Scope, y::Scope) = is_equal(x.scope, y.scope)
