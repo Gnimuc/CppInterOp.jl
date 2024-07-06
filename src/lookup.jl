@@ -1,7 +1,7 @@
 """
-    lookup(name::AbstractString, parent::AbstractScope) -> Scope
+    lookup(name::AbstractString, parent::CXScope) -> CXScope
 """
-function lookup(name::AbstractString, parent::AbstractScope)
+function lookup(name::AbstractString, parent::CXScope)
     s = parent
     for n in eachsplit(name, "::")
         isempty(n) && continue
@@ -11,7 +11,7 @@ function lookup(name::AbstractString, parent::AbstractScope)
 end
 
 """
-    lookup(name::AbstractString, parent::AbstractScope) -> Scope
+    lookup(name::AbstractString, parent::CXScope) -> CXScope
 Look up a namespace or class (by stripping typedefs) by name.
 """
 function lookup(x::AbstractInterpreter, name::AbstractString)
@@ -20,14 +20,11 @@ function lookup(x::AbstractInterpreter, name::AbstractString)
 end
 
 """
-    name(x::AbstractScope) -> String
+    name(x::CXScope) -> String
 """
-name(x::AbstractScope) = getName(x)
+name(x::CXScope) = getName(x)
 
 """
-    fullname(x::AbstractScope) -> String
+    fullname(x::CXScope) -> String
 """
-fullname(x::AbstractScope) = getQualifiedName(x)
-
-is_equal(x::CXScope, y::CXScope) = x.data == y.data
-is_equal(x::Scope, y::Scope) = is_equal(x.scope, y.scope)
+fullname(x::CXScope) = getQualifiedName(x)

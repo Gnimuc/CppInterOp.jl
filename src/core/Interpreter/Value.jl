@@ -1,4 +1,10 @@
 """
+    abstract type AbstractValue <: Any
+Supertype for values.
+"""
+abstract type AbstractValue end
+
+"""
     struct Value <: AbstractValue
 """
 struct Value <: AbstractValue

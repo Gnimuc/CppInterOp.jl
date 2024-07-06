@@ -1,4 +1,5 @@
 using CppInterOp
+using CppInterOp: @include
 using Test
 
 @testset "Lookup" begin

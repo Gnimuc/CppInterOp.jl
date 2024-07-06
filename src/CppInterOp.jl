@@ -49,7 +49,7 @@ include("types.jl")
 
 include("interpreter.jl")
 export create_interpreter, dispose
-export declare, process, evaluate, undo, @include
+export declare, process, evaluate, undo
 export lookup_func
 
 include("lookup.jl")

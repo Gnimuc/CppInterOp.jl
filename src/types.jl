@@ -46,9 +46,9 @@ get_value(x::CppVoid) = nothing
 
 
 get_type(x::AbstractInterpreter, name::AbstractString) = getType(x, name)
-get_type(x::AbstractScope) = getType(x)
+get_type(x::CXScope) = getType(x)
 
-get_scope(x::AbstractType) = getScopeFromType(x)
+get_scope(x::CXQualType) = getScopeFromType(x)
 
-sizeof(x::AbstractType) = getSizeOfType(x)
-sizeof(x::AbstractScope) = getSizeOf(x)
+sizeof(x::CXQualType) = getSizeOfType(x)
+sizeof(x::CXScope) = getSizeOf(x)

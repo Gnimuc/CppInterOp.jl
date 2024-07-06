@@ -1,4 +1,10 @@
 """
+    abstract type AbstractInterpreter <: Any
+Supertype for interpreters.
+"""
+abstract type AbstractInterpreter end
+
+"""
     struct Interpreter <: AbstractInterpreter
 """
 struct Interpreter <: AbstractInterpreter

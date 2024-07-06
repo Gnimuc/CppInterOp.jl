@@ -1,5 +1,5 @@
 using CppInterOp
-using CppInterOp: get_scope, get_type, is_valid
+using CppInterOp: get_scope, get_type, is_valid, @include
 import CppInterOp as Cpp
 using Test
 
@@ -14,13 +14,13 @@ using Test
 
         Foo = lookup(I, "Foo")
         @test is_valid(Foo)
-        @test Cpp.is_equal(Foo, get_scope(get_type(Foo)))
+        @test Foo.data == get_scope(get_type(Foo)).data
 
         FooTyDef = lookup(I, "FooTyDef")
         @test is_valid(FooTyDef)
         # typedefs is desugared to the actual type
-        @test !Cpp.is_equal(FooTyDef, get_scope(get_type(FooTyDef)))
-        @test Cpp.is_equal(Foo, get_scope(get_type(FooTyDef)))
+        @test FooTyDef.data != get_scope(get_type(FooTyDef)).data
+        @test Foo.data == get_scope(get_type(FooTyDef)).data
 
         dispose(I)
     end
