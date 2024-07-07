@@ -27,7 +27,7 @@ using Test
         @test undo(I, 2) == true
 
         process(I, "float x = 42.0;")
-        @test evaluate(I, "x") === 42f0
+        @test evaluate(I, "x") === 42.0f0
 
         dispose(I)
     end

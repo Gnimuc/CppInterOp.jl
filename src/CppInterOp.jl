@@ -7,11 +7,11 @@ using libCppInterOpExtra_jll
 using Preferences
 
 if has_preference(CppInterOp, "libCppInterOpExtra")
-	const libCppInterOpExtra = load_preference(CppInterOp, "libCppInterOpExtra")
+    const libCppInterOpExtra = load_preference(CppInterOp, "libCppInterOpExtra")
 else
-	if isdefined(libCppInterOpExtra_jll, :libCppInterOpExtra)
-		import libCppInterOpExtra_jll: libCppInterOpExtra
-	end
+    if isdefined(libCppInterOpExtra_jll, :libCppInterOpExtra)
+        import libCppInterOpExtra_jll: libCppInterOpExtra
+    end
 end
 
 include("jllshim.jl")

@@ -44,7 +44,6 @@ get_value(x::CppLongDouble) = getLongDouble(x)
 get_value(x::CppPtrOrObj) = getPtr(x)
 get_value(x::CppVoid) = nothing
 
-
 get_type(x::AbstractInterpreter, name::AbstractString) = getType(x, name)
 get_type(x::CXScope) = getType(x)
 

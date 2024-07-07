@@ -2,8 +2,8 @@
 	createInterpreter(args::Vector{String}) -> Interpreter
 Create an `Interpreter` from a list of arguments.
 """
-function createInterpreter(args::Vector{T}) where {T <: AbstractString}
-	return Interpreter(clang_createInterpreter(args, length(args)))
+function createInterpreter(args::Vector{T}) where {T<:AbstractString}
+    return Interpreter(clang_createInterpreter(args, length(args)))
 end
 
 dispose(x::Interpreter) = clang_interpreter_dispose(x)
@@ -21,7 +21,7 @@ is_valid(x::Interpreter) = x.ptr != C_NULL
 Create an `Interpreter` from a raw pointer and takes ownership.
 """
 function createInterpreter(x)
-	return Interpreter(clang_createInterpreterFromPtr(x))
+    return Interpreter(clang_createInterpreterFromPtr(x))
 end
 
 """
@@ -35,8 +35,8 @@ Add a search path to the `Interpreter`.
 - `prepend::Bool=false`: Whether to prepend the directory.
 """
 function addSearchPath(x::AbstractInterpreter, path::AbstractString, isUser::Bool=true, prepend::Bool=false)
-	@check_ptrs x
-	clang_interpreter_addSearchPath(x, path, isUser, prepend)
+    @check_ptrs x
+    clang_interpreter_addSearchPath(x, path, isUser, prepend)
 end
 
 """

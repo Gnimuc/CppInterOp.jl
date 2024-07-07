@@ -18,7 +18,6 @@ end
 Base.unsafe_convert(::Type{CXCppScope}, x::CppScope) = x.ptr
 Base.cconvert(::Type{CXCppScope}, x::CppScope) = x
 
-
 # type
 abstract type AbstractCppType end
 
@@ -79,7 +78,7 @@ end
 Base.unsafe_convert(::Type{CXCppJitCall}, x::CppJitCall) = x.ptr
 Base.cconvert(::Type{CXCppJitCall}, x::CppJitCall) = x
 
-function EnableDebugOutput(value = true)
+function EnableDebugOutput(value=true)
     clang_CppInterOp_EnableDebugOutput(value)
 end
 
@@ -233,10 +232,9 @@ GetGlobalScope() = CppScope(clang_CppInterOp_GetGlobalScope())
 function GetUnderlyingScope(x::AbstractCppScope)
     @check_ptrs x
     return CppScope(clang_CppInterOp_GetUnderlyingScope(x))
-
 end
 
-function GetScope(name::AbstractString, parent::AbstractCppScope = CppScope(C_NULL))
+function GetScope(name::AbstractString, parent::AbstractCppScope=CppScope(C_NULL))
     return CppScope(clang_CppInterOp_GetScope(name, parent))
 end
 
@@ -244,7 +242,7 @@ function GetScopeFromCompleteName(name::AbstractString)
     return CppScope(clang_CppInterOp_GetScopeFromCompleteName(name))
 end
 
-function GetNamed(name::AbstractString, parent::AbstractCppScope = CppScope(C_NULL))
+function GetNamed(name::AbstractString, parent::AbstractCppScope=CppScope(C_NULL))
     return CppScope(clang_CppInterOp_GetNamed(name, parent))
 end
 
@@ -345,10 +343,8 @@ function IsTemplatedFunction(x::AbstractCppFunction)
     return clang_CppInterOp_IsTemplatedFunction(x)
 end
 
-function ExistsFunctionTemplate(
-    name::AbstractString,
-    parent::AbstractCppScope = CppScope(C_NULL),
-)
+function ExistsFunctionTemplate(name::AbstractString,
+                                parent::AbstractCppScope=CppScope(C_NULL))
     return clang_CppInterOp_ExistsFunctionTemplate(name, parent)
 end
 
@@ -513,19 +509,14 @@ function GetFunctionArgName(func::AbstractCppFunction, param_index::Integer)
     return get_string(clang_CppInterOp_GetFunctionArgName(func, param_index))
 end
 
-function CreateInterpreter(
-    args::Vector{<:AbstractString} = String[],
-    gpu_args::Vector{<:AbstractString} = String[],
-)
-    return CppInterpreter(
-        clang_CppInterOp_CreateInterpreter(args, length(args), gpu_args, length(gpu_args)),
-    )
+function CreateInterpreter(args::Vector{<:AbstractString}=String[],
+                           gpu_args::Vector{<:AbstractString}=String[])
+    return CppInterpreter(clang_CppInterOp_CreateInterpreter(args, length(args), gpu_args, length(gpu_args)))
 end
 
 GetInterpreter() = CppInterpreter(clang_CppInterOp_GetInterpreter())
 
-AddSearchPath(dir::AbstractString, isUser::Bool, prepend::Bool) =
-    clang_CppInterOp_AddSearchPath(dir, isUser, prepend)
+AddSearchPath(dir::AbstractString, isUser::Bool, prepend::Bool) = clang_CppInterOp_AddSearchPath(dir, isUser, prepend)
 
 GetResourceDir() = unsafe_string(clang_CppInterOp_GetResourceDir())
 
@@ -537,19 +528,19 @@ Process(code::AbstractString) = clang_CppInterOp_Process(code)
 
 Evaluate(code::AbstractString, hadError=Ref{Bool}()) = clang_CppInterOp_Evaluate(code, hadError)
 
-LookupLibrary(lib_name::AbstractString) =
-    get_string(clang_CppInterOp_LookupLibrary(lib_name))
+LookupLibrary(lib_name::AbstractString) = get_string(clang_CppInterOp_LookupLibrary(lib_name))
 
-LoadLibrary(lib_stem::AbstractString, lookup::Bool=true) =
-    clang_CppInterOp_LoadLibrary(lib_stem, lookup)
+LoadLibrary(lib_stem::AbstractString, lookup::Bool=true) = clang_CppInterOp_LoadLibrary(lib_stem, lookup)
 
 UnloadLibrary(lib_stem::AbstractString) = clang_CppInterOp_UnloadLibrary(lib_stem)
 
-SearchLibrariesForSymbol(mangled_name::AbstractString, search_system::Bool) =
+function SearchLibrariesForSymbol(mangled_name::AbstractString, search_system::Bool)
     clang_CppInterOp_SearchLibrariesForSymbol(mangled_name, search_system)
+end
 
-InsertOrReplaceJitSymbol(linker_mangled_name::AbstractString, address::Unsigned) =
+function InsertOrReplaceJitSymbol(linker_mangled_name::AbstractString, address::Unsigned)
     clang_CppInterOp_InsertOrReplaceJitSymbol(linker_mangled_name, address)
+end
 
 ObjToString(type::AbstractString, obj) = get_string(clang_CppInterOp_ObjToString(type, obj))
 
@@ -558,13 +549,11 @@ struct CXTemplateArgInfo
     m_IntegralValue::Ptr{Cchar}
 end
 
-InstantiateClassTemplate(
-    tmpl::AbstractCppScope,
-    template_args,
-    template_args_size::Integer,
-) = CppScope(
-    clang_CppInterOp_InstantiateClassTemplate(tmpl, template_args, template_args_size),
-)
+function InstantiateClassTemplate(tmpl::AbstractCppScope,
+                                  template_args,
+                                  template_args_size::Integer)
+    CppScope(clang_CppInterOp_InstantiateClassTemplate(tmpl, template_args, template_args_size))
+end
 
 struct CXTemplateArgInfoSet
     Args::Ptr{CXTemplateArgInfo}
@@ -580,9 +569,7 @@ end
 
 function InstantiateTemplateFunctionFromString(function_template::AbstractString)
     @check_ptrs function_template
-    return CppFunction(
-        clang_CppInterOp_InstantiateTemplateFunctionFromString(function_template),
-    )
+    return CppFunction(clang_CppInterOp_InstantiateTemplateFunctionFromString(function_template))
 end
 
 function GetAllCppNames(x::AbstractCppScope)
@@ -632,7 +619,6 @@ end
     CXCppkStdErr = 2
 end
 
-BeginStdStreamCapture(fd_kind::CXCppCaptureStreamKind) =
-    clang_CppInterOp_BeginStdStreamCapture(fd_kind)
+BeginStdStreamCapture(fd_kind::CXCppCaptureStreamKind) = clang_CppInterOp_BeginStdStreamCapture(fd_kind)
 
 EndStdStreamCapture() = get_string(clang_CppInterOp_EndStdStreamCapture())
