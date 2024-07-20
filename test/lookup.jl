@@ -1,5 +1,5 @@
 using CppInterOp
-using CppInterOp: @include
+using CppInterOp: @include, declare, lookup
 using Test
 
 @testset "Lookup" begin

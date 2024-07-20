@@ -1,4 +1,5 @@
 using CppInterOp
+using CppInterOp: create_interpreter, dispose, process, evaluate, undo, lookup_func
 using Test
 
 @testset "Interpreter" begin

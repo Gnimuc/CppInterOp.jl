@@ -41,18 +41,18 @@ include("extra.jl")
 
 include("version.jl")
 
-# public API
+# public
 include("env.jl")
-export get_compiler_flags
+public get_compiler_flags
 
 include("types.jl")
 
 include("interpreter.jl")
-export create_interpreter, dispose
-export declare, process, evaluate, undo
-export lookup_func
+public create_interpreter, dispose
+public declare, process, evaluate, undo
+public lookup_func
 
 include("lookup.jl")
-export lookup
+public lookup
 
 end
