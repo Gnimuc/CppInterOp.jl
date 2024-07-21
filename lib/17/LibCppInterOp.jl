@@ -1147,6 +1147,22 @@ function clang_construct(scope, arena)
 end
 
 """
+    clang_invoke(func, result, args, n, self)
+
+Creates a trampoline function and makes a call to a generic function or method.
+
+# Arguments
+* `func`: The function or method to call.
+* `result`: The location where the return result will be placed.
+* `args`: The arguments to pass to the invocation.
+* `n`: The number of arguments.
+* `self`: The 'this pointer' of the object.
+"""
+function clang_invoke(func, result, args, n, self)
+    @ccall libCppInterOp.clang_invoke(func::CXScope, result::Ptr{Cvoid}, args::Ptr{Ptr{Cvoid}}, n::Csize_t, self::Ptr{Cvoid})::Cvoid
+end
+
+"""
     clang_destruct(This, S, withFree)
 
 Calls the destructor of object of type `type`. When withFree is true it calls operator delete/free.
@@ -1158,92 +1174,6 @@ Calls the destructor of object of type `type`. When withFree is true it calls op
 """
 function clang_destruct(This, S, withFree)
     @ccall libCppInterOp.clang_destruct(This::CXObject, S::CXScope, withFree::Bool)::Cvoid
-end
-
-mutable struct CXJitCallImpl end
-
-"""
-An opaque pointer representing CppInterOp's JitCall, a class modeling function calls for functions produced by the interpreter in compiled code.
-"""
-const CXJitCall = Ptr{CXJitCallImpl}
-
-"""
-    clang_jitcall_create(func)
-
-Creates a trampoline function by using the interpreter and returns a uniform interface to call it from compiled code.
-
-# Returns
-a [`CXJitCall`](@ref).
-"""
-function clang_jitcall_create(func)
-    @ccall libCppInterOp.clang_jitcall_create(func::CXScope)::CXJitCall
-end
-
-"""
-    clang_jitcall_dispose(J)
-
-Dispose of the given [`CXJitCall`](@ref).
-
-# Arguments
-* `J`: The [`CXJitCall`](@ref) to dispose.
-"""
-function clang_jitcall_dispose(J)
-    @ccall libCppInterOp.clang_jitcall_dispose(J::CXJitCall)::Cvoid
-end
-
-"""
-    CXJitCallKind
-
-The kind of the JitCall.
-"""
-@enum CXJitCallKind::UInt32 begin
-    CXJitCall_Unknown = 0
-    CXJitCall_GenericCall = 1
-    CXJitCall_DestructorCall = 2
-end
-
-"""
-    clang_jitcall_getKind(J)
-
-Get the kind of the given [`CXJitCall`](@ref).
-
-# Arguments
-* `J`: The [`CXJitCall`](@ref).
-# Returns
-the kind of the given [`CXJitCall`](@ref).
-"""
-function clang_jitcall_getKind(J)
-    @ccall libCppInterOp.clang_jitcall_getKind(J::CXJitCall)::CXJitCallKind
-end
-
-"""
-    clang_jitcall_isValid(J)
-
-Check if the given [`CXJitCall`](@ref) is valid.
-
-# Arguments
-* `J`: The [`CXJitCall`](@ref).
-# Returns
-true if the given [`CXJitCall`](@ref) is valid.
-"""
-function clang_jitcall_isValid(J)
-    @ccall libCppInterOp.clang_jitcall_isValid(J::CXJitCall)::Bool
-end
-
-"""
-    clang_jitcall_invoke(J, result, args, n, self)
-
-Makes a call to a generic function or method.
-
-# Arguments
-* `J`: The [`CXJitCall`](@ref).
-* `result`: The location where the return result will be placed.
-* `args`: The arguments to pass to the invocation.
-* `n`: The number of arguments.
-* `self`: The 'this pointer' of the object.
-"""
-function clang_jitcall_invoke(J, result, args, n, self)
-    @ccall libCppInterOp.clang_jitcall_invoke(J::CXJitCall, result::Ptr{Cvoid}, args::Ptr{Ptr{Cvoid}}, n::Cuint, self::Ptr{Cvoid})::Cvoid
 end
 
 # exports

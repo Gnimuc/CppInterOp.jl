@@ -49,5 +49,5 @@ get_type(x::CXScope) = getType(x)
 
 get_scope(x::CXQualType) = getScopeFromType(x)
 
-sizeof(x::CXQualType) = getSizeOfType(x)
-sizeof(x::CXScope) = getSizeOf(x)
+get_size_of(x::CXQualType) = getSizeOfType(x)
+get_size_of(x::CXScope) = getSizeOf(x)

@@ -26,6 +26,15 @@ function construct(x::CXScope, arena=C_NULL)
 end
 
 """
+    invoke(x::CXScope, result, args=[], self=C_NULL)
+Create a trampoline function and invoke the C/C++ function/method.
+"""
+function invoke(x::CXScope, result, args=Ptr{Cvoid}[], self=C_NULL)
+    @check_ptrs x
+    return clang_invoke(x, result, args, length(args), self)
+end
+
+"""
     destruct(x::CXObject, decl::CXScope, free::Bool=true)
 Destruct an object by calling its destructor.
 """

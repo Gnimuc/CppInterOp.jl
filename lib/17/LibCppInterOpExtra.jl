@@ -1,7 +1,7 @@
 module LibCppInterOpExtra
 
 using ..CppInterOp: libCppInterOp, libCppInterOpExtra
-using ..CppInterOp: CXErrorCode, CXTypeKind, CXString, CXStringSet, CXValue
+using ..CppInterOp: CXErrorCode, CXTypeKind, CXString, CXStringSet
 
 const intptr_t = Clong
 
@@ -442,11 +442,6 @@ end
 
 function clang_CppInterOp_ObjToString(type, obj)
     @ccall libCppInterOpExtra.clang_CppInterOp_ObjToString(type::Ptr{Cchar}, obj::Ptr{Cvoid})::CXString
-end
-
-struct CXTemplateArgInfo
-    m_Type::CXCppType
-    m_IntegralValue::Ptr{Cchar}
 end
 
 function clang_CppInterOp_InstantiateTemplate(tmpl, template_args, template_args_size)
