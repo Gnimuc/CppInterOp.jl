@@ -32,7 +32,7 @@ using Test
         # build-in types
         int = get_type(I, "int")
         @test is_valid(int)
-        @test Cpp.sizeof(int) == sizeof(Cint)
+        @test Cpp.get_size_of(int) == sizeof(Cint)
 
         dispose(I)
     end

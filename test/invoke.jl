@@ -12,14 +12,12 @@ using Test
     @test Cpp.name(x) == "clock"
     @test Cpp.fullname(x) == "clock"
 
-    clk = Cpp.create_cppcall(x)
     t1 = Cpp.evaluate(I, "clock()")
     result = Ref{Clong}(C_NULL)
-    Cpp.invoke(clk, result)
+    Cpp.invoke(x, result)
     t = result[]
     t2 = Cpp.evaluate(I, "clock()")
     @test t1 < t < t2
 
-    Cpp.dispose(clk)
     Cpp.dispose(I)
 end

@@ -36,10 +36,6 @@ using .JLLEnvs
 include("utilities.jl")
 include("core/core.jl")
 include("api/api.jl")
-# deprecated
-include("extra.jl")
-
-include("version.jl")
 
 # public
 include("env.jl")

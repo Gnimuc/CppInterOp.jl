@@ -3,7 +3,7 @@
 Allocate a struct/union/class object and return its address.
 """
 function allocate(x::CXScope)
-    @check_ptrs x
+    @assert is_valid(x) "Invalid scope: $x"
     return clang_allocate(x)
 end
 
@@ -21,7 +21,7 @@ end
 Construct an object by calling its default constructor.
 """
 function construct(x::CXScope, arena=C_NULL)
-    @check_ptrs x
+    @assert is_valid(x) "Invalid scope: $x"
     return clang_construct(x, arena)
 end
 
@@ -30,7 +30,7 @@ end
 Create a trampoline function and invoke the C/C++ function/method.
 """
 function invoke(x::CXScope, result, args=Ptr{Cvoid}[], self=C_NULL)
-    @check_ptrs x
+    @assert is_valid(x) "Invalid scope: $x"
     return clang_invoke(x, result, args, length(args), self)
 end
 
@@ -39,6 +39,7 @@ end
 Destruct an object by calling its destructor.
 """
 function destruct(obj::CXObject, decl::CXScope, free::Bool=true)
-    @check_ptrs obj decl
+    @check_ptrs obj
+    @assert is_valid(decl) "Invalid scope: $decl"
     clang_destruct(obj, decl, free)
 end
