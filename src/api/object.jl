@@ -26,7 +26,7 @@ function construct(x::CXScope, arena=C_NULL)
 end
 
 """
-    invoke(x::CXScope, result, args=[], self=C_NULL)
+    invoke(x::CXScope, result, args=Ptr{Cvoid}[], self=C_NULL)
 Create a trampoline function and invoke the C/C++ function/method.
 """
 function invoke(x::CXScope, result, args=Ptr{Cvoid}[], self=C_NULL)

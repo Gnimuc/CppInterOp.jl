@@ -70,5 +70,15 @@ function getFunctionReturnType(x::CXScope)
     return clang_scope_getFunctionReturnType(x)
 end
 
+function getFunctionSignature(x::CXScope)
+    @assert is_valid(x) "Invalid scope: $x"
+    return get_string(clang_scope_getFunctionSignature(x))
+end
+
 # helper functions
 is_valid(x::CXScope) = x.kind != CXScope_Invalid
+
+function make_scope(x::Ptr{Cvoid}, I::CXInterpreter, kind::CXScopeKind=CXScope_Unexposed)
+    @assert x != C_NULL "Invalid pointer: $x"
+    return CXScope(kind, x, I)
+end

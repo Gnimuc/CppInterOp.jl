@@ -11,7 +11,7 @@ dispose(x::Interpreter) = clang_interpreter_dispose(x)
 # get the raw pointer to the underlying `clang::Interpreter`
 getptr(x::Interpreter) = clang_interpreter_getUnderlyingInterpreter(x)
 
-# get the raw pointer to the underlying interpreter(not `clang::Interpreter``) and take ownership
+# get the raw pointer to the underlying interpreter(not `clang::Interpreter`) and take ownership
 takeptr(x::Interpreter) = clang_interpreter_takeInterpreterAsPtr(x)
 
 is_valid(x::Interpreter) = x.ptr != C_NULL
