@@ -1,11 +1,8 @@
 """
-    allocate(x::CXScope) -> CXObject
+    allocate(x::Unsigned) -> CXObject
 Allocate a struct/union/class object and return its address.
 """
-function allocate(x::CXScope)
-    @assert is_valid(x) "Invalid scope: $x"
-    return clang_allocate(x)
-end
+allocate(x::Unsigned) = clang_allocate(x)
 
 """
     deallocate(x::CXObject)

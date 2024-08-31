@@ -1120,12 +1120,12 @@ An opaque pointer representing the object of a given type ([`CXScope`](@ref)).
 const CXObject = Ptr{Cvoid}
 
 """
-    clang_allocate(S)
+    clang_allocate(n)
 
 Allocates memory for the given type.
 """
-function clang_allocate(S)
-    @ccall libCppInterOp.clang_allocate(S::CXScope)::CXObject
+function clang_allocate(n)
+    @ccall libCppInterOp.clang_allocate(n::Cuint)::CXObject
 end
 
 """
