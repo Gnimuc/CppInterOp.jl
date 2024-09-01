@@ -1,8 +1,8 @@
 """
-    allocate(x::Unsigned) -> CXObject
+    allocate(x::Integer) -> CXObject
 Allocate a struct/union/class object and return its address.
 """
-allocate(x::Unsigned) = clang_allocate(x)
+allocate(x::Integer) = clang_allocate(Unsigned(x))
 
 """
     deallocate(x::CXObject)
