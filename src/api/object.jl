@@ -8,10 +8,7 @@ allocate(x::Integer) = clang_allocate(Unsigned(x))
     deallocate(x::CXObject)
 Deallocate an object that are allocated by [`allocate`](@ref).
 """
-function deallocate(x::CXObject)
-    @check_ptrs x
-    clang_deallocate(x)
-end
+deallocate(x::CXObject) = clang_deallocate(x)
 
 """
     construct(x::CXScope, arena=C_NULL) -> CXObject
