@@ -1,4 +1,4 @@
-using ..CppInterOp: libCppInterOpExtra
-using ..CppInterOp: CXString, CXStringSet
+using ..CppInterOp: libCppInterOp, libCppInterOpExtra
+using ..CppInterOp: CXErrorCode, CXTypeKind, CXString, CXStringSet
 
 const intptr_t = Clong
