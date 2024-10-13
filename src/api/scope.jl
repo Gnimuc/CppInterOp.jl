@@ -75,6 +75,13 @@ function getFunctionSignature(x::CXScope)
     return get_string(clang_scope_getFunctionSignature(x))
 end
 
+function instantiateTemplate(x::CXScope, args::Vector{CXTemplateArgInfo})
+    @assert is_valid(x) "Invalid scope: $x"
+    return clang_scope_instantiateTemplate(x, args, length(args))
+end
+
+CXTemplateArgInfo(x) = CXTemplateArgInfo(x, C_NULL)
+
 # helper functions
 is_valid(x::CXScope) = x.kind != CXScope_Invalid
 
