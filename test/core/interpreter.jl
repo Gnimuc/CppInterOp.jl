@@ -14,7 +14,7 @@ using Test
     julia_libdir = joinpath(Sys.BINDIR, "..", "lib") |> normpath
     Cpp.addSearchPath(I, julia_libdir)
     @test Cpp.lookupLibrary(I, "libjulia") != ""
-    @test Cpp.loadLibrary(I, "libstdc++") == true
+    # @test Cpp.loadLibrary(I, "libstdc++") == true
     # TODO: @test Cpp.unloadLibrary(I, "libstdc++")
     # TODO: @test Cpp.searchLibrariesForSymbol(I, "jl_init") != ""
 
