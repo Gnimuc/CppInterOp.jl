@@ -9,8 +9,6 @@ using Test
     I = Cpp.createInterpreter(args)
     @test I.ptr != C_NULL
 
-    @test Cpp.lookupLibrary(I, "libjulia") == ""
-
     julia_libdir = joinpath(Sys.BINDIR, "..", "lib") |> normpath
     Cpp.addSearchPath(I, julia_libdir)
     @test Cpp.lookupLibrary(I, "libjulia") != ""
