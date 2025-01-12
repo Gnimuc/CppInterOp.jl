@@ -19,6 +19,7 @@ using .JLLShim
 
 const libdir = joinpath(@__DIR__, "..", "lib")
 
+using CEnum
 include(joinpath(libdir, "LibClang.jl"))
 
 const llvm_version = string(Base.libllvm_version.major)
@@ -46,9 +47,9 @@ include("types.jl")
 include("interpreter.jl")
 public create_interpreter, dispose
 public declare, process, evaluate, undo
-public lookup_func
+# public lookup_func
 
-include("lookup.jl")
-public lookup
+# include("lookup.jl")
+# public lookup
 
 end

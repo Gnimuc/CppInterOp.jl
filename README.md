@@ -16,13 +16,13 @@ julia> using CppInterOp
 
 julia> import CppInterOp as Cpp
 
-julia> create_interpreter()
-CppInterOp.CppInterpreter(Ptr{Nothing}(0x0000600001585580))
+julia> I = Cpp.create_interpreter()
+CppInterOp.Interpreter(Ptr{CppInterOp.LibCppInterOp.CXInterpreterImpl}(0x0000000156091b00))
 
-julia> Cpp.Declare("#include <iostream>")
-0
+julia> Cpp.declare(I, "#include <iostream>")
+true
 
-julia> Cpp.Process("""std::cout << 42 << std::endl;""")
+julia> Cpp.process(I, """std::cout << 42 << std::endl;""")
 42
-0
+true
 ```

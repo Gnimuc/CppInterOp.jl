@@ -25,7 +25,7 @@ Evaluate a code snippet and return the result.
 """
 function evaluate(x::AbstractInterpreter, code::AbstractString)
     v = createValue()
-    res = clang_interpreter_evaluate(x, code, v)
+    res = clang_Interpreter_evaluate(x, code, v)
     if res == CXError_Success
         ret = get_value(CppValue(v))
         dispose(v)
@@ -42,7 +42,7 @@ Undo the last `n` steps.
 """
 undo(x::AbstractInterpreter, n::Integer=1) = Undo(x, n) == CXError_Success
 
-lookup_func(x::AbstractInterpreter, name::AbstractString) = getFunctionAddressFromMangledName(x, name)
+# lookup_func(x::AbstractInterpreter, name::AbstractString) = getFunctionAddressFromMangledName(x, name)
 
 macro include(I, path)
     quote

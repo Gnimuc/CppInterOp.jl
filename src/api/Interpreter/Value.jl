@@ -4,7 +4,7 @@ Create a opaque pointer to `clang::Value`.
 """
 createValue() = Value(clang_createValue())
 
-dispose(x::AbstractValue) = clang_value_dispose(x)
+dispose(x::AbstractValue) = clang_Value_dispose(x)
 
 function getType(x::AbstractValue)
     @check_ptrs x

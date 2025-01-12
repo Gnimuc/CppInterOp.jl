@@ -6,13 +6,13 @@ function createInterpreter(args::Vector{T}) where {T<:AbstractString}
     return Interpreter(clang_createInterpreter(args, length(args)))
 end
 
-dispose(x::Interpreter) = clang_interpreter_dispose(x)
+dispose(x::Interpreter) = clang_Interpreter_dispose(x)
 
 # get the raw pointer to the underlying `clang::Interpreter`
-getptr(x::Interpreter) = clang_interpreter_getUnderlyingInterpreter(x)
+getptr(x::Interpreter) = clang_Interpreter_getClangInterpreter(x)
 
 # get the raw pointer to the underlying interpreter(not `clang::Interpreter`) and take ownership
-takeptr(x::Interpreter) = clang_interpreter_takeInterpreterAsPtr(x)
+takeptr(x::Interpreter) = clang_Interpreter_takeInterpreterAsPtr(x)
 
 is_valid(x::Interpreter) = x.ptr != C_NULL
 
@@ -21,7 +21,7 @@ is_valid(x::Interpreter) = x.ptr != C_NULL
 Create an `Interpreter` from a raw pointer and takes ownership.
 """
 function createInterpreter(x)
-    return Interpreter(clang_createInterpreterFromPtr(x))
+    return Interpreter(clang_createInterpreterFromRawPtr(x))
 end
 
 """
@@ -36,7 +36,7 @@ Add a search path to the `Interpreter`.
 """
 function addSearchPath(x::AbstractInterpreter, path::AbstractString, isUser::Bool=true, prepend::Bool=false)
     @check_ptrs x
-    clang_interpreter_addSearchPath(x, path, isUser, prepend)
+    clang_Interpreter_addSearchPath(x, path, isUser, prepend)
 end
 
 """
@@ -49,7 +49,7 @@ Add an include path to the `Interpreter`.
 """
 function addIncludePath(x::AbstractInterpreter, path::AbstractString)
     @check_ptrs x
-    clang_interpreter_addIncludePath(x, path)
+    clang_Interpreter_addIncludePath(x, path)
 end
 
 """
@@ -63,7 +63,7 @@ Declare a code snippet and does not execute it.
 """
 function declare(x::AbstractInterpreter, code::AbstractString, silent::Bool=false)
     @check_ptrs x
-    return clang_interpreter_declare(x, code, silent) == CXError_Success
+    return clang_Interpreter_declare(x, code, silent) == CXError_Success
 end
 
 """
@@ -76,7 +76,7 @@ Declare and execute a code snippet.
 """
 function process(x::AbstractInterpreter, code::AbstractString)
     @check_ptrs x
-    return clang_interpreter_process(x, code) == CXError_Success
+    return clang_Interpreter_process(x, code) == CXError_Success
 end
 
 """
@@ -90,7 +90,7 @@ Declare and execute a code snippet, and store the execution result in `v`.
 """
 function evaluate(x::AbstractInterpreter, code::AbstractString, v::AbstractValue)
     @check_ptrs x
-    return clang_interpreter_evaluate(x, code, v) == CXError_Success
+    return clang_Interpreter_evaluate(x, code, v) == CXError_Success
 end
 
 """
@@ -103,7 +103,7 @@ Look up the library if access is enabled. Return the path to the library.
 """
 function lookupLibrary(x::AbstractInterpreter, lib_name::AbstractString)
     @check_ptrs x
-    cxstr = clang_interpreter_lookupLibrary(x, lib_name)
+    cxstr = clang_Interpreter_lookupLibrary(x, lib_name)
     return get_string(cxstr)
 end
 
@@ -118,7 +118,7 @@ Finds `lib_stem` considering the list of search paths and loads it by calling dl
 """
 function loadLibrary(x::AbstractInterpreter, lib_stem::AbstractString, lookup::Bool=true)
     @check_ptrs x
-    return clang_interpreter_loadLibrary(x, lib_stem, lookup) == CXInterpreter_Success
+    return clang_Interpreter_loadLibrary(x, lib_stem, lookup) == CXInterpreter_Success
 end
 
 """
@@ -131,24 +131,24 @@ Finds `lib_stem` considering the list of search paths and unloads it by calling 
 """
 function unloadLibrary(x::AbstractInterpreter, lib_stem::AbstractString)
     @check_ptrs x
-    return clang_interpreter_unloadLibrary(x, lib_stem) == CXInterpreter_Success
+    return clang_Interpreter_unloadLibrary(x, lib_stem) == CXInterpreter_Success
 end
 
-"""
-    searchLibrariesForSymbol(x::AbstractInterpreter, symbol::AbstractString, search_system::Bool=true) -> String
-Scan all libraries on the library search path for a given potentially mangled symbol name.
-Return the path to the first library that contains the symbol definition.
+# """
+#     searchLibrariesForSymbol(x::AbstractInterpreter, symbol::AbstractString, search_system::Bool=true) -> String
+# Scan all libraries on the library search path for a given potentially mangled symbol name.
+# Return the path to the first library that contains the symbol definition.
 
-# Arguments
-- `x::AbstractInterpreter`: The `Interpreter`.
-- `symbol::AbstractString`: The mangled name to search for.
-- `search_system::Bool=true`: Whether to search the system library paths.
-"""
-function searchLibrariesForSymbol(x::AbstractInterpreter, symbol::AbstractString, search_system::Bool=true)
-    @check_ptrs x
-    cxstr = clang_interpreter_searchLibrariesForSymbol(x, symbol, search_system)
-    return get_string(cxstr)
-end
+# # Arguments
+# - `x::AbstractInterpreter`: The `Interpreter`.
+# - `symbol::AbstractString`: The mangled name to search for.
+# - `search_system::Bool=true`: Whether to search the system library paths.
+# """
+# function searchLibrariesForSymbol(x::AbstractInterpreter, symbol::AbstractString, search_system::Bool=true)
+#     @check_ptrs x
+#     cxstr = clang_interpreter_searchLibrariesForSymbol(x, symbol, search_system)
+#     return get_string(cxstr)
+# end
 
 """
     Undo(x::AbstractInterpreter, n::Integer) -> Bool
@@ -156,14 +156,14 @@ Undo `n`` previous incremental inputs.
 """
 function Undo(x::AbstractInterpreter, n::Integer)
     @check_ptrs x
-    clang_interpreter_Undo(x, n)
+    clang_Interpreter_undo(x, n)
 end
 
-"""
-    getFunctionAddressFromMangledName(x::AbstractInterpreter, name::AbstractString) -> Ptr{Cvoid}
-Find the address of a function by searching its mangled name.
-"""
-function getFunctionAddressFromMangledName(x::AbstractInterpreter, name::AbstractString)
-    @check_ptrs x
-    return clang_interpreter_getFunctionAddressFromMangledName(x, name)
-end
+# """
+#     getFunctionAddressFromMangledName(x::AbstractInterpreter, name::AbstractString) -> Ptr{Cvoid}
+# Find the address of a function by searching its mangled name.
+# """
+# function getFunctionAddressFromMangledName(x::AbstractInterpreter, name::AbstractString)
+#     @check_ptrs x
+#     return clang_interpreter_getFunctionAddressFromMangledName(x, name)
+# end
