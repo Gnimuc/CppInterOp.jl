@@ -12,7 +12,12 @@ using Test
     julia_libdir = Sys.iswindows() ? Sys.BINDIR : joinpath(Sys.BINDIR, "..", "lib") |> normpath
     Cpp.addSearchPath(I, julia_libdir)
     @test Cpp.lookupLibrary(I, "libjulia") != ""
-    # @test Cpp.loadLibrary(I, "libstdc++") == true
+    if Sys.islinux()
+        # need to explicitly load libclang-cpp.so
+        libclangcpp_libdir = joinpath(Cpp.Clang_jll.artifact_dir, "lib")
+        Cpp.addSearchPath(I, libclangcpp_libdir)
+        @test Cpp.loadLibrary(I, "libclang-cpp") == true
+    end
     # TODO: @test Cpp.unloadLibrary(I, "libstdc++")
     # TODO: @test Cpp.searchLibrariesForSymbol(I, "jl_init") != ""
 
