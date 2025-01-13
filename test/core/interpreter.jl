@@ -9,7 +9,7 @@ using Test
     I = Cpp.createInterpreter(args)
     @test I.ptr != C_NULL
 
-    julia_libdir = joinpath(Sys.BINDIR, "..", "lib") |> normpath
+    julia_libdir = Sys.iswindows() ? Sys.BINDIR : joinpath(Sys.BINDIR, "..", "lib") |> normpath
     Cpp.addSearchPath(I, julia_libdir)
     @test Cpp.lookupLibrary(I, "libjulia") != ""
     # @test Cpp.loadLibrary(I, "libstdc++") == true
