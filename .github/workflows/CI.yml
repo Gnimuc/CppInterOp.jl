@@ -17,32 +17,39 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [nightly]
         include:
           - name: Ubuntu-22.04
             os: ubuntu-22.04
             arch: x64
+            version: nightly
           - name: Ubuntu-24.04
             os: ubuntu-24.04
-            arch: x64        
+            arch: x64
+            version: nightly
           - name: Ubuntu-22.04-arm
             os: ubuntu-22.04-arm
             arch: arm64
+            version: nightly
           - name: Ubuntu-24.04-arm
             os: ubuntu-24.04-arm
             arch: arm64
+            version: nightly
           - name: MacOS-15
             os: macOS-15
             arch: arm64
+            version: nightly
           - name: MacOS-14
             os: macOS-14
             arch: arm64
+            version: nightly
           - name: Windows-2025
             os: windows-2025
             arch: x64
+            version: nightly
           - name: Windows-2022
             os: windows-2022
             arch: x64
+            version: nightly
     steps:
       - uses: actions/checkout@v4
         with:
