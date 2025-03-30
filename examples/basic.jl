@@ -1,4 +1,3 @@
-using CppInterOp
 import CppInterOp as Cpp
 
 I = Cpp.create_interpreter()
