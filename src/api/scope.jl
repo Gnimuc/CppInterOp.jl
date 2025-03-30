@@ -87,5 +87,5 @@ is_valid(x::CXScope) = x.data[1] != C_NULL
 
 function make_scope(x::Ptr{Cvoid}, I::CXInterpreter, kind::CXCursorKind=CXCursor_UnexposedDecl)
     @assert x != C_NULL "Invalid pointer: $x"
-    return CXScope(kind, x, I)
+    return CXScope(kind, 0, (x, C_NULL, I))
 end

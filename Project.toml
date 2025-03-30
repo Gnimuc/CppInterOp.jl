@@ -17,8 +17,8 @@ CEnum = "0.5.0"
 Clang_jll = "~18"
 Preferences = "1.4.3"
 julia = "1.12"
-libCppInterOpExtra_jll = "=0.0.2"
-libCppInterOp_jll = "~0.1.5"
+libCppInterOpExtra_jll = "=0.0.3"
+libCppInterOp_jll = "~0.1.6"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
