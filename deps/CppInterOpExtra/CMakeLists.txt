@@ -37,7 +37,8 @@ if (WIN32)
     target_compile_definitions(CppInterOpExtra PUBLIC "_CINDEX_LIB_")
 endif(WIN32)
 
-target_link_libraries(CppInterOpExtra LINK_PUBLIC LLVM clang-cpp CppInterOp::CppInterOp)
+target_link_libraries(CppInterOpExtra PRIVATE LLVM clang-cpp CppInterOp::CppInterOp)
+set_target_properties(CppInterOpExtra PROPERTIES LINK_OPTIONS "")
 
 # Install CompilationDatabase
 set_target_properties(CppInterOpExtra PROPERTIES EXPORT_COMPILE_COMMANDS true)
