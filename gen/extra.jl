@@ -32,8 +32,7 @@ cd(@__DIR__) do
                 options["general"]["output_file_path"] = output_file_path
 
                 libclang_include_dir = joinpath(Clang_jll.artifact_dir, "include")
-                # libCppInterOp_include_dir = joinpath(libCppInterOp_jll.artifact_dir, "include")
-                libCppInterOp_include_dir = joinpath("/Users/gnimuc/.julia/dev/libCppInterOp_jll/override", "include")
+                libCppInterOp_include_dir = joinpath(libCppInterOp_jll.artifact_dir, "include")
                 include_dir = joinpath(@__DIR__, "..", "deps", "CppInterOpExtra", "include")
                 header_dir = joinpath(include_dir, "clang-c")
                 args = Generators.get_default_args()
