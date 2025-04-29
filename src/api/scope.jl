@@ -80,7 +80,7 @@ function instantiateTemplate(x::CXScope, args::Vector{CXTemplateArgInfo})
     return clang_instantiateTemplate(x, args, length(args))
 end
 
-CXTemplateArgInfo(x) = CXTemplateArgInfo(x, C_NULL)
+LibCppInterOp.CXTemplateArgInfo(x) = CXTemplateArgInfo(x, C_NULL)
 
 # helper functions
 is_valid(x::CXScope) = x.data[1] != C_NULL
